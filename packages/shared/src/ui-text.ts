@@ -89,6 +89,15 @@ const th = {
   joined: "ขอบคุณ! เราจะแจ้งข่าวทางอีเมล",
   privacy: "นโยบายความเป็นส่วนตัว",
   lessonDone: "เรียนจบบทนี้แล้ว",
+  dailyReminder: "เตือนให้เรียนทุกวัน",
+  reminderTime: "เวลาเตือน",
+  reminderTitle: "ได้เวลาเรียน AI แล้ว 📚",
+  reminderBody: "วันละ 10 นาที เก่งขึ้นทุกวัน มาเรียนต่อกันเถอะ",
+  notificationsDenied: "ยังไม่ได้อนุญาตการแจ้งเตือน เปิดได้ในการตั้งค่าของมือถือ",
+  restorePurchases: "กู้คืนการซื้อ",
+  purchaseFailed: "ซื้อไม่สำเร็จ ลองอีกครั้งนะ",
+  storeUnavailable: "ยังซื้อในแอปไม่ได้ตอนนี้",
+  language: "ภาษา",
   offTopic: "ช่องนี้ใช้ฝึกเฉพาะโจทย์ของบทนี้เท่านั้น ลองเขียนคำสั่งตามโจทย์ด้านบนนะ",
 };
 
@@ -175,6 +184,15 @@ const zh: UiText = {
   joined: "谢谢！我们会通过邮件通知你",
   privacy: "隐私政策",
   lessonDone: "本课已完成",
+  dailyReminder: "每日学习提醒",
+  reminderTime: "提醒时间",
+  reminderTitle: "该学 AI 啦 📚",
+  reminderBody: "每天 10 分钟，每天进步一点，继续学习吧",
+  notificationsDenied: "还没有允许通知，可以在手机设置里打开",
+  restorePurchases: "恢复购买",
+  purchaseFailed: "购买没有成功，请再试一次",
+  storeUnavailable: "暂时无法在 App 内购买",
+  language: "语言",
   offTopic: "这个练习框只用于本课的任务，请按上面的题目来写提问",
 };
 
@@ -259,6 +277,15 @@ const en: UiText = {
   joined: "Thanks! We'll email you.",
   privacy: "Privacy policy",
   lessonDone: "Lesson complete",
+  dailyReminder: "Daily reminder",
+  reminderTime: "Reminder time",
+  reminderTitle: "Time to learn AI 📚",
+  reminderBody: "10 minutes a day adds up. Let's keep going.",
+  notificationsDenied: "Notifications are off. You can turn them on in your phone settings.",
+  restorePurchases: "Restore purchases",
+  purchaseFailed: "Purchase didn't go through. Please try again.",
+  storeUnavailable: "In-app purchase isn't available right now",
+  language: "Language",
   offTopic: "This practice box is only for this lesson's task. Try writing a prompt for the task above.",
 };
 

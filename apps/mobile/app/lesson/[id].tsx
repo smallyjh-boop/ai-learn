@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { parseMd, t, type Inline, type Lesson, type LessonStep, type PracticeResponse } from "@ai-learn/shared";
-import { api, ApiFailure, deviceLocale, hasToken, saveToken } from "../../src/api";
+import { api, ApiFailure, deviceLocale } from "../../src/api";
+import { updateMe, useSession } from "../../src/session";
 import { useTheme } from "../../src/theme";
 
 type Tx = ReturnType<typeof t>;
@@ -19,12 +20,18 @@ export default function LessonScreen() {
   const [index, setIndex] = useState(0);
   const [stepDone, setStepDone] = useState(false);
   const [best, setBest] = useState<number | undefined>();
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState<null | { first: boolean }>(null);
+  const [error, setError] = useState<string | null>(null);
+  const { me } = useSession();
 
+  // 登录状态或会员状态变化时重新取课（开通会员后解锁完整内容）
   useEffect(() => {
-    api.lesson(id, deviceLocale).then((r) => { setLesson(r.lesson); setLocked(r.locked); });
-  }, [id]);
+    api.lesson(id, deviceLocale)
+      .then((r) => { setLesson(r.lesson); setLocked(r.locked); setIndex(0); setError(null); })
+      .catch((e: Error) => setError(e.message));
+  }, [id, me?.id, me?.plan]);
 
+  if (error) return <View style={[s.screen, s.content]}><Text style={{ color: c.warn }}>{error}</Text></View>;
   if (!lesson) return <View style={s.screen} />;
   const step = lesson.steps[index]!;
   const isLast = index === lesson.steps.length - 1;
@@ -32,15 +39,24 @@ export default function LessonScreen() {
 
   async function next() {
     if (!isLast) { setIndex(index + 1); setStepDone(false); return; }
-    if (hasToken()) await api.complete(lesson!.id, best).catch(() => undefined);
-    setFinished(true);
+    if (!me) { setFinished({ first: false }); return; }
+    try {
+      const r = await api.complete(lesson!.id, deviceLocale, best);
+      updateMe(r.me);
+      setFinished({ first: r.first });
+    } catch {
+      setFinished({ first: false });
+    }
   }
 
   if (finished) {
     return (
       <View style={[s.screen, s.content, { justifyContent: "center" }]}>
-        <Text style={[s.h1, { textAlign: "center" }]}>🎉 {lesson.title}</Text>
-        <Text style={[s.text, { textAlign: "center", marginBottom: 24 }]}>+{lesson.xp} XP</Text>
+        <Text style={[s.h1, { textAlign: "center" }]}>🎉 {tx.lessonDone}</Text>
+        <Text style={[s.text, { textAlign: "center", marginBottom: 8 }]}>{lesson.title}</Text>
+        {finished.first && <Text style={[s.h2, { textAlign: "center", marginBottom: 8 }]}>+{lesson.xp} XP</Text>}
+        {!me && <Text style={[s.muted, { textAlign: "center", marginBottom: 8, color: c.accent }]} onPress={() => router.push("/login")}>{tx.loginToSave}</Text>}
+        <View style={{ height: 16 }} />
         <Pressable style={s.btn} onPress={() => router.back()}><Text style={s.btnText}>{tx.continue}</Text></Pressable>
       </View>
     );
@@ -59,8 +75,10 @@ export default function LessonScreen() {
       {locked ? (
         <View style={s.card}>
           <Text style={s.h2}>{tx.locked}</Text>
-          {/* TODO: 接入 RevenueCat 付费墙 */}
-          <Pressable style={[s.btn, { marginTop: 12 }]}><Text style={s.btnText}>{tx.upgrade}</Text></Pressable>
+          <Text style={[s.muted, { marginTop: 4 }]}>{tx.proPoint1}</Text>
+          <Pressable style={[s.btn, { marginTop: 12 }]} onPress={() => router.push(me ? "/paywall" : "/login")}>
+            <Text style={s.btnText}>{me ? tx.upgrade : tx.login}</Text>
+          </Pressable>
         </View>
       ) : (
         <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
@@ -146,8 +164,7 @@ function Practice(p: { step: Extract<LessonStep, { type: "practice" }>; tx: Tx; 
   const { step, tx, theme } = p;
   const { s, c } = theme;
   const [prompt, setPrompt] = useState("");
-  const [email, setEmail] = useState("");
-  const [loggedIn, setLoggedIn] = useState(hasToken());
+  const loggedIn = Boolean(useSession().me);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<PracticeResponse | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
@@ -168,13 +185,9 @@ function Practice(p: { step: Extract<LessonStep, { type: "practice" }>; tx: Tx; 
       <Text style={s.muted}>{tx.yourTurn}</Text>
       <Text style={[s.text, { fontWeight: "700", marginVertical: 8 }]}>{step.task}</Text>
       {!loggedIn ? (
-        // TODO: 换成 LINE / Google / Apple 登录按钮
-        <View style={{ gap: 8 }}>
-          <TextInput style={s.input} value={email} onChangeText={setEmail} placeholder="email" autoCapitalize="none" keyboardType="email-address" />
-          <Pressable style={s.btn} onPress={async () => { const r = await api.devLogin(email, deviceLocale); await saveToken(r.token); setLoggedIn(true); }}>
-            <Text style={s.btnText}>{tx.login}</Text>
-          </Pressable>
-        </View>
+        <Pressable style={s.btn} onPress={() => router.push("/login")}>
+          <Text style={s.btnText}>{tx.loginToPractice}</Text>
+        </Pressable>
       ) : (
         <View style={{ gap: 8 }}>
           <TextInput style={[s.input, { minHeight: 110, textAlignVertical: "top" }]} multiline value={prompt}
@@ -191,6 +204,7 @@ function Practice(p: { step: Extract<LessonStep, { type: "practice" }>; tx: Tx; 
           <Text style={s.muted}>{tx.aiAnswer}</Text>
           <View style={s.box}><Text style={s.text}>{result.output}</Text></View>
           <Text style={[s.text, { fontWeight: "700" }]}>{tx.score}: {result.feedback.score}</Text>
+          {result.feedback.flagged && <Text style={{ color: c.warn }}>{tx.offTopic}</Text>}
           {result.feedback.good.map((g, i) => <Text key={`g${i}`} style={s.text}>✓ {g}</Text>)}
           {result.feedback.improve.map((g, i) => <Text key={`i${i}`} style={s.text}>→ {g}</Text>)}
         </View>
