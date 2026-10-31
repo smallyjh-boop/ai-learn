@@ -1,0 +1,8 @@
+[
+  { "stage": 0, "locale": "en", "title": "Meet AI", "summary": "What AI is, what it can do, and your first conversation", "free": true },
+  { "stage": 1, "locale": "en", "title": "Ask better", "summary": "Give context, a role, examples and an output format", "free": true },
+  { "stage": 2, "locale": "en", "title": "Everyday AI", "summary": "Messages, translation, summaries, travel plans", "free": false },
+  { "stage": 3, "locale": "en", "title": "AI at work", "summary": "Reports, spreadsheets, slides, meeting notes", "free": false },
+  { "stage": 4, "locale": "en", "title": "Selling and creating", "summary": "Images, product copy, customer replies", "free": false },
+  { "stage": 5, "locale": "en", "title": "Advanced", "summary": "Your own prompt library, automation, simple programs with AI", "free": false }
+]

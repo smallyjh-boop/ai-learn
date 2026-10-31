@@ -1,0 +1,40 @@
+{
+  "id": "s1-01",
+  "locale": "en",
+  "stage": 1,
+  "order": 1,
+  "title": "Give the AI context",
+  "summary": "Say who you are, what you want and who it's for",
+  "minutes": 8,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "The AI doesn't know you. A short prompt gets a vague answer.\n\nAn easy formula — say 3 things:\n1. **Who you are / what's going on**\n2. **What you want**\n3. **Who will read it / where it's used**"
+    },
+    {
+      "type": "example",
+      "bad": "Write a sales post",
+      "prompt": "I sell second-hand cotton T-shirts in Chiang Mai. Write a Facebook post of 3 lines max for young people, casual tone, saying 2 shirts for 199 baht.",
+      "output": "Second-hand cotton tees, great condition, super comfy 👕\nDeal! Any 2 for just 199 baht\nMessage me now, limited stock, fast delivery in Chiang Mai 🚀",
+      "note": "The good prompt names the product, place, audience, length and offer."
+    },
+    {
+      "type": "quiz",
+      "question": "Which prompt will most likely give a usable answer?",
+      "options": ["Write an email", "Write a polite sick-leave email to my manager for 1 day, under 5 lines", "Leave email"],
+      "answer": 1
+    },
+    {
+      "type": "practice",
+      "task": "Using the 3-part formula, ask the AI to write a LINE message telling a customer their order will ship 2 days late",
+      "rubric": [
+        "Describes the situation (what shop, why or how late)",
+        "Says what is wanted (a message to the customer)",
+        "Names the reader or channel (customer, LINE)",
+        "Sets a tone or length"
+      ],
+      "maxChars": 600
+    }
+  ]
+}

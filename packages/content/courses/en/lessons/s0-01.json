@@ -1,0 +1,30 @@
+{
+  "id": "s0-01",
+  "locale": "en",
+  "stage": 0,
+  "order": 1,
+  "title": "What AI can do",
+  "summary": "What AI is good at, and where to be careful",
+  "minutes": 5,
+  "xp": 10,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Chat AI (like ChatGPT, Claude or Gemini) is an assistant that is **very good with words**.\n\nGood at:\n- Writing messages, emails, captions\n- Turning long text into short summaries\n- Translating\n- Brainstorming and planning\n\nBe careful:\n- AI **can be wrong** while sounding sure. Always check things that matter.\n- Never type ID numbers or passwords."
+    },
+    {
+      "type": "quiz",
+      "question": "Which should you always double-check, even if the AI sounds sure?",
+      "options": ["Name ideas for a coffee shop", "How much medicine to take", "A birthday message"],
+      "answer": 1,
+      "explain": "Health, money and legal questions always need a professional or a trusted source."
+    },
+    {
+      "type": "practice",
+      "task": "Your first chat: ask the AI for 3 simple dinners you can cook in 20 minutes",
+      "rubric": ["Says clearly what is wanted", "Gives a number (3 dinners)", "Gives the time limit (20 minutes)"],
+      "maxChars": 400,
+      "placeholder": "Type your prompt here…"
+    }
+  ]
+}
