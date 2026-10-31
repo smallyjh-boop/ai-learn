@@ -8,7 +8,7 @@ import {
   type ApiError, type AuthConfig, type AuthResponse, type CourseMapResponse, type LessonResponse, type Locale, type Me,
   type PracticeResponse, type UrlResponse,
 } from "@ai-learn/shared";
-import { getLesson, getStages, listLessons, type Catalog } from "@ai-learn/content";
+import { courseMap, getLesson, type Catalog } from "@ai-learn/content";
 import { config } from "./config";
 import type { Store, UserRow } from "./db/store";
 import type { Quota } from "./quota";
@@ -179,21 +179,10 @@ export async function buildApp(deps: Deps) {
   // ---------- 课程 ----------
   app.get("/courses", async (req): Promise<CourseMapResponse> => {
     const u = await currentUser(req);
-    const locale = localeOf(req, u);
-    const pro = u ? await isPro(u) : false;
-    const done = u ? await store.completedLessons(u.id) : new Map<string, number | null>();
-    const lessons = listLessons(catalog, locale);
-    const stages = getStages(catalog, locale).map((s) => {
-      const free = isFreeStage(s.stage);
-      return {
-        ...s,
-        free,
-        lessons: lessons
-          .filter((l) => l.stage === s.stage)
-          .map(({ steps: _steps, ...meta }) => ({ ...meta, locked: !free && !pro, completed: done.has(meta.id) })),
-      };
+    return courseMap(catalog, localeOf(req, u), {
+      pro: u ? await isPro(u) : false,
+      done: u ? await store.completedLessons(u.id) : undefined,
     });
-    return { stages };
   });
 
   app.get<{ Params: { id: string } }>("/lessons/:id", async (req, reply) => {

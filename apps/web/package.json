@@ -9,10 +9,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-learn/content": "workspace:*",
     "@ai-learn/shared": "workspace:*",
     "next": "^15.0.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

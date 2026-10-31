@@ -1,14 +1,19 @@
 # NAS 测试部署：docker compose up -d --build
 # 网站 http://<NAS-IP>:3000   API http://<NAS-IP>:4000
+# 注意：NEXT_PUBLIC_API_URL / WEB_URL 必须填浏览器能访问到的地址（NAS 的 IP 或域名），不能是 localhost
 services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ailearn
-      POSTGRES_PASSWORD: ailearn
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ailearn}
       POSTGRES_DB: ailearn
     volumes: [dbdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ailearn"]
+      interval: 5s
+      retries: 10
 
   redis:
     image: redis:7-alpine
@@ -19,10 +24,12 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      DATABASE_URL: postgres://ailearn:ailearn@db:5432/ailearn
+      DATABASE_URL: postgres://ailearn:${POSTGRES_PASSWORD:-ailearn}@db:5432/ailearn
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
-    depends_on: [db, redis]
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_started }
     ports: ["4000:4000"]
 
   web:
@@ -31,6 +38,8 @@ services:
       dockerfile: apps/web/Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:4000}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-}
     restart: unless-stopped
     depends_on: [api]
     ports: ["3000:3000"]

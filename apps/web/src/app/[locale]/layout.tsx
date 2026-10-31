@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LOCALES, LOCALE_LABEL, isLocale, t, type Locale } from "@ai-learn/shared";
+import { LOCALES, isLocale, t } from "@ai-learn/shared";
+import { HeaderNav } from "@/components/HeaderNav";
+import { SITE_URL, languageAlternates } from "@/lib/seo";
 import "../globals.css";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -13,10 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!isLocale(locale)) return {};
   const tx = t(locale);
   return {
-    title: { default: tx.appName, template: `%s · ${tx.appName}` },
+    metadataBase: new URL(SITE_URL),
+    title: { default: `${tx.appName} — ${tx.tagline}`, template: `%s · ${tx.appName}` },
     description: tx.tagline,
-    // 告诉搜索引擎各语言版本（泰国本地 SEO）
-    alternates: { languages: Object.fromEntries(LOCALES.map((l) => [l === "th" ? "th-TH" : l, `/${l}`])) },
+    alternates: { canonical: `/${locale}`, languages: languageAlternates("") },
+    openGraph: { siteName: tx.appName, locale: locale === "th" ? "th_TH" : locale === "zh" ? "zh_CN" : "en_US", type: "website" },
   };
 }
 
@@ -30,13 +35,14 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <div className="wrap">
           <header className="top">
             <Link className="brand" href={`/${locale}`}>{tx.appName}</Link>
-            <nav className="langs" aria-label="language">
-              {LOCALES.map((l: Locale) => (
-                <Link key={l} href={`/${l}`} aria-current={l === locale}>{LOCALE_LABEL[l]}</Link>
-              ))}
-            </nav>
+            <HeaderNav locale={locale} />
           </header>
           {children}
+          <footer className="foot muted">
+            <Link href={`/${locale}/learn`}>{tx.learnMap}</Link>
+            <Link href={`/${locale}/pricing`}>{tx.pricing}</Link>
+            <Link href={`/${locale}/privacy`}>{tx.privacy}</Link>
+          </footer>
         </div>
       </body>
     </html>
