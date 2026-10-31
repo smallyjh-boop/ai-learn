@@ -26,9 +26,18 @@ export interface AiUsageRow {
   outputTokens: number;
 }
 
+/** 合并后的会员状态（各付款来源中任一有效即为 Pro） */
 export interface Entitlement {
   plan: Plan;
   source: string | null;
+  expiresAt: Date | null;
+}
+
+/** 某一付款来源的权益记录 */
+export interface SourceEntitlement {
+  plan: Plan;
+  /** stripe | app_store | play_store | manual */
+  source: string;
   expiresAt: Date | null;
 }
 
@@ -40,14 +49,15 @@ export interface Store {
   findOrCreateUser(input: { provider: string; providerId: string; email?: string | null; name?: string | null; locale: Locale }): Promise<UserRow>;
   getUser(id: string): Promise<UserRow | undefined>;
   getEntitlement(userId: string): Promise<Entitlement>;
-  setEntitlement(userId: string, e: Entitlement): Promise<void>;
+  /** 写入某个付款来源的权益（同一来源覆盖，不同来源互不影响） */
+  setEntitlement(userId: string, e: SourceEntitlement): Promise<void>;
   completedLessons(userId: string): Promise<Map<string, number | null>>;
   /** 记一课完成；首次完成返回 true（加经验值），重复完成只更新最高分 */
   completeLesson(userId: string, lessonId: string, score: number | null, xp: number, today: string): Promise<{ first: boolean; user: UserRow }>;
   setStripeCustomer(userId: string, customerId: string): Promise<void>;
   /** 删除账号及其全部数据（进度、权益、AI 用量） */
   deleteUser(userId: string): Promise<void>;
-  logAiUsage(row: AiUsageRow): Promise<void>;
+  logAiUsage(row: AiUsageRow & { flagged?: boolean }): Promise<void>;
   /** 某时间点以来的 AI token 总数（输入+输出），用于告警 */
   aiTokensSince(since: Date): Promise<number>;
   /** 加入预约名单；已存在返回 false */
@@ -62,20 +72,24 @@ export function nextStreak(last: string | null, current: number, today: string):
   return diff === 1 ? current + 1 : 1;
 }
 
-function activePlan(e: Entitlement | undefined): Entitlement {
-  if (!e) return { plan: "free", source: null, expiresAt: null };
-  if (e.plan === "pro" && e.expiresAt && e.expiresAt.getTime() < Date.now()) {
-    return { plan: "free", source: e.source, expiresAt: e.expiresAt };
-  }
-  return e;
+/** 合并各来源：有效的 Pro 里取到期最晚的（无到期时间 = 长期有效） */
+export function mergeEntitlements(rows: SourceEntitlement[], now = Date.now()): Entitlement {
+  const active = rows.filter((r) => r.plan === "pro" && (!r.expiresAt || r.expiresAt.getTime() > now));
+  if (!active.length) return { plan: "free", source: null, expiresAt: null };
+  const best = active.reduce((a, b) => {
+    if (!a.expiresAt) return a;
+    if (!b.expiresAt) return b;
+    return b.expiresAt > a.expiresAt ? b : a;
+  });
+  return { plan: "pro", source: best.source, expiresAt: best.expiresAt };
 }
 
 // ---------------- 内存版（开发 / 测试） ----------------
 export class MemoryStore implements Store {
   private users = new Map<string, UserRow>();
-  private ents = new Map<string, Entitlement>();
+  private ents = new Map<string, Map<string, SourceEntitlement>>();
   private prog = new Map<string, Map<string, number | null>>();
-  private usage: Array<AiUsageRow & { at: Date }> = [];
+  private usage: Array<AiUsageRow & { flagged?: boolean; at: Date }> = [];
   private wait = new Map<string, Locale>();
 
   async findOrCreateUser(input: Parameters<Store["findOrCreateUser"]>[0]) {
@@ -90,8 +104,12 @@ export class MemoryStore implements Store {
     return u;
   }
   async getUser(id: string) { return this.users.get(id); }
-  async getEntitlement(userId: string) { return activePlan(this.ents.get(userId)); }
-  async setEntitlement(userId: string, e: Entitlement) { this.ents.set(userId, e); }
+  async getEntitlement(userId: string) { return mergeEntitlements([...(this.ents.get(userId)?.values() ?? [])]); }
+  async setEntitlement(userId: string, e: SourceEntitlement) {
+    const m = this.ents.get(userId) ?? new Map<string, SourceEntitlement>();
+    m.set(e.source, e);
+    this.ents.set(userId, m);
+  }
   async completedLessons(userId: string) { return new Map(this.prog.get(userId) ?? []); }
   async completeLesson(userId: string, lessonId: string, score: number | null, xp: number, today: string) {
     const u = this.users.get(userId);
@@ -116,7 +134,7 @@ export class MemoryStore implements Store {
     this.prog.delete(userId);
     this.usage = this.usage.filter((r) => r.userId !== userId);
   }
-  async logAiUsage(row: AiUsageRow) { this.usage.push({ ...row, at: new Date() }); }
+  async logAiUsage(row: AiUsageRow & { flagged?: boolean }) { this.usage.push({ ...row, at: new Date() }); }
   async aiTokensSince(since: Date) {
     return this.usage.filter((r) => r.at >= since).reduce((n, r) => n + r.inputTokens + r.outputTokens, 0);
   }
@@ -163,16 +181,16 @@ export class PgStore implements Store {
   }
 
   async getEntitlement(userId: string) {
-    const r = await this.db.select().from(schema.entitlements).where(eq(schema.entitlements.userId, userId)).limit(1);
-    return activePlan(r[0] ? { plan: r[0].plan as Plan, source: r[0].source, expiresAt: r[0].expiresAt } : undefined);
+    const rows = await this.db.select().from(schema.entitlements).where(eq(schema.entitlements.userId, userId));
+    return mergeEntitlements(rows.map((r) => ({ plan: r.plan as Plan, source: r.source, expiresAt: r.expiresAt })));
   }
 
-  async setEntitlement(userId: string, e: Entitlement) {
+  async setEntitlement(userId: string, e: SourceEntitlement) {
     await this.db.insert(schema.entitlements)
       .values({ userId, plan: e.plan, source: e.source, expiresAt: e.expiresAt })
       .onConflictDoUpdate({
-        target: schema.entitlements.userId,
-        set: { plan: e.plan, source: e.source, expiresAt: e.expiresAt, updatedAt: new Date() },
+        target: [schema.entitlements.userId, schema.entitlements.source],
+        set: { plan: e.plan, expiresAt: e.expiresAt, updatedAt: new Date() },
       });
   }
 
@@ -210,7 +228,7 @@ export class PgStore implements Store {
     await this.db.delete(schema.users).where(eq(schema.users.id, userId));
   }
 
-  async logAiUsage(row: AiUsageRow) {
+  async logAiUsage(row: AiUsageRow & { flagged?: boolean }) {
     await this.db.insert(schema.aiUsage).values(row);
   }
 

@@ -61,10 +61,15 @@ export class MockProvider implements AiProvider {
 
   private async reply({ system, user }: CompleteInput) {
     if (system.includes("GRADER")) {
+      // 方便测试内容审核：提示词里带 "ignore previous instructions" 视为不当
+      if (/ignore previous instructions/i.test(user)) {
+        return { text: JSON.stringify({ on_task: false, score: 0, good: [], improve: ["(mock) Stay on the exercise"] }) };
+      }
       const len = user.length;
       const score = Math.min(95, 40 + Math.floor(len / 6));
       return {
         text: JSON.stringify({
+          on_task: true,
           score,
           good: ["(mock) The request is clear"],
           improve: score < 80 ? ["(mock) Add who will read it and the tone you want"] : [],

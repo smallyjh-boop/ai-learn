@@ -22,6 +22,9 @@ export const config = {
     dailyTokenAlert: Number(env.AI_DAILY_TOKEN_ALERT ?? 2_000_000),
   },
 
+  /** 告警推送地址（Slack / Discord / 自建中转），不填只写日志 */
+  alertWebhookUrl: env.ALERT_WEBHOOK_URL || "",
+
   quota: {
     free: Number(env.QUOTA_FREE_PER_DAY ?? 5),
     pro: Number(env.QUOTA_PRO_PER_DAY ?? 50),

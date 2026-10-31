@@ -175,6 +175,7 @@ function Practice(props: Omit<StepProps, "step"> & { step: Extract<LessonStep, {
           <p className="muted">{tx.aiAnswer}</p>
           <div className="prompt">{result.output}</div>
           <p><strong>{tx.score}: {result.feedback.score}</strong></p>
+          {result.feedback.flagged && <p className="err">{tx.offTopic}</p>}
           {result.feedback.good.length > 0 && (<><p className="muted">{tx.wellDone}</p><ul>{result.feedback.good.map((g, i) => <li key={i}>{g}</li>)}</ul></>)}
           {result.feedback.improve.length > 0 && (<><p className="muted">{tx.improve}</p><ul>{result.feedback.improve.map((g, i) => <li key={i}>{g}</li>)}</ul></>)}
         </div>

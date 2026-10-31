@@ -5,15 +5,17 @@ CREATE TABLE IF NOT EXISTS "ai_usage" (
 	"model" text NOT NULL,
 	"input_tokens" integer NOT NULL,
 	"output_tokens" integer NOT NULL,
+	"flagged" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "entitlements" (
-	"user_id" text PRIMARY KEY NOT NULL,
+	"user_id" text NOT NULL,
+	"source" text NOT NULL,
 	"plan" text DEFAULT 'free' NOT NULL,
-	"source" text,
 	"expires_at" timestamp with time zone,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "entitlements_user_id_source_pk" PRIMARY KEY("user_id","source")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "progress" (

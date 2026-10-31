@@ -48,6 +48,8 @@ export interface PracticeFeedback {
   /** 0-100 */
   score: number;
   passed: boolean;
+  /** 内容审核：提示词与练习无关或不当 */
+  flagged: boolean;
   /** 做得好的地方 */
   good: string[];
   /** 可以改进的地方 */

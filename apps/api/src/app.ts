@@ -16,7 +16,8 @@ import { todayBangkok } from "./quota";
 import type { AiProvider } from "./ai/gateway";
 import { runPractice } from "./ai/practice";
 import { exchangeLineCode, verifyGoogle, verifyLine, verifyApple, type VerifiedIdentity } from "./auth/providers";
-import { applyEntitlement, type StripeBilling } from "./billing/stripe";
+import type { StripeBilling } from "./billing/stripe";
+import { Alerts } from "./alerts";
 
 export interface Deps {
   store: Store;
@@ -47,6 +48,7 @@ export async function buildApp(deps: Deps) {
   const origins = config.corsOrigins.length ? config.corsOrigins : [config.webUrl];
   await app.register(cors, { origin: config.isProd ? origins : true });
   await app.register(jwt, { secret: config.jwtSecret, sign: { expiresIn: "60d" } });
+  const alerts = new Alerts(config.alertWebhookUrl, app.log);
 
   /** 读取当前用户（可选登录） */
   async function currentUser(req: FastifyRequest): Promise<UserRow | undefined> {
@@ -224,27 +226,29 @@ export async function buildApp(deps: Deps) {
 
     try {
       const { usage, ...result } = await runPractice(ai, { task: step.task, rubric: step.rubric, prompt: body.data.prompt, locale });
-      await recordUsage(req, u.id, usage);
+      await recordUsage(req, u.id, usage, result.feedback.flagged);
+      if (result.feedback.flagged) req.log.info({ userId: u.id, lessonId: lesson.id }, "practice prompt flagged");
       return { ...result, quota: { used: taken.used, limit } } satisfies PracticeResponse;
     } catch (e) {
       await quota.refund(u.id);
       req.log.error(e, "AI practice failed");
+      void alerts.send("AI_FAILED", `AI 调用失败：${(e as Error).message.slice(0, 200)}`);
       return fail(reply, 502, { error: "AI service unavailable, please try again" });
     }
   });
 
   /** 记录 AI 用量；当天总量超过阈值时告警（每天只告警一次，打到日志里，可接日志告警） */
   let alertedDay = "";
-  async function recordUsage(req: FastifyRequest, userId: string, usage: Awaited<ReturnType<typeof runPractice>>["usage"]) {
+  async function recordUsage(req: FastifyRequest, userId: string, usage: Awaited<ReturnType<typeof runPractice>>["usage"], flagged: boolean) {
     try {
-      for (const row of usage) await store.logAiUsage({ userId, ...row });
+      for (const row of usage) await store.logAiUsage({ userId, ...row, flagged: flagged && row.kind === "grade" });
       const threshold = config.ai.dailyTokenAlert;
       const today = todayBangkok();
       if (threshold > 0 && alertedDay !== today) {
         const total = await store.aiTokensSince(startOfBangkokDay());
         if (total > threshold) {
           alertedDay = today;
-          req.log.warn({ total, threshold, alert: "AI_DAILY_TOKENS" }, `⚠️ 今日 AI token 用量 ${total} 超过告警线 ${threshold}`);
+          await alerts.send("AI_DAILY_TOKENS", `⚠️ 今日 AI token 用量 ${total} 超过告警线 ${threshold}`, { total, threshold });
         }
       }
     } catch (e) {
@@ -327,7 +331,7 @@ export async function buildApp(deps: Deps) {
     const active = ["INITIAL_PURCHASE", "RENEWAL", "UNCANCELLATION", "PRODUCT_CHANGE"].includes(ev.type);
     const ended = ev.type === "EXPIRATION";
     if (active || ended) {
-      await applyEntitlement(store, ev.app_user_id, {
+      await store.setEntitlement(ev.app_user_id, {
         plan: active ? "pro" : "free",
         source: ev.store === "PLAY_STORE" ? "play_store" : "app_store",
         expiresAt: ev.expiration_at_ms ? new Date(ev.expiration_at_ms) : null,

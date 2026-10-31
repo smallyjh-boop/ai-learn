@@ -89,6 +89,7 @@ const th = {
   joined: "ขอบคุณ! เราจะแจ้งข่าวทางอีเมล",
   privacy: "นโยบายความเป็นส่วนตัว",
   lessonDone: "เรียนจบบทนี้แล้ว",
+  offTopic: "ช่องนี้ใช้ฝึกเฉพาะโจทย์ของบทนี้เท่านั้น ลองเขียนคำสั่งตามโจทย์ด้านบนนะ",
 };
 
 type UiText = typeof th;
@@ -174,6 +175,7 @@ const zh: UiText = {
   joined: "谢谢！我们会通过邮件通知你",
   privacy: "隐私政策",
   lessonDone: "本课已完成",
+  offTopic: "这个练习框只用于本课的任务，请按上面的题目来写提问",
 };
 
 const en: UiText = {
@@ -257,6 +259,7 @@ const en: UiText = {
   joined: "Thanks! We'll email you.",
   privacy: "Privacy policy",
   lessonDone: "Lesson complete",
+  offTopic: "This practice box is only for this lesson's task. Try writing a prompt for the task above.",
 };
 
 export const UI_TEXT: Record<Locale, UiText> = { th, zh, en };

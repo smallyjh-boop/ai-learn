@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import type { Locale } from "@ai-learn/shared";
-import type { Entitlement, Store, UserRow } from "../db/store";
+import type { Store, UserRow } from "../db/store";
 
 /**
  * 网站付款：Stripe Checkout（订阅）+ Customer Portal（用户自己管理/取消）+ webhook。
@@ -92,21 +92,9 @@ export async function applySubscription(store: Store, sub: Stripe.Subscription, 
   if (!userId || !(await store.getUser(userId))) return;
   const active = ["active", "trialing", "past_due"].includes(sub.status);
   const periodEnd = Math.max(0, ...sub.items.data.map((i) => i.current_period_end ?? 0));
-  await applyEntitlement(store, userId, {
+  await store.setEntitlement(userId, {
     plan: active ? "pro" : "free",
     source: "stripe",
     expiresAt: active && periodEnd ? new Date(periodEnd * 1000) : null,
   });
-}
-
-/**
- * 写入权益。目前每个用户只有一行：如果另一个付款来源的会员仍然有效，
- * 本来源的「到期/取消」不应把它覆盖成 free。
- */
-export async function applyEntitlement(store: Store, userId: string, next: Entitlement) {
-  if (next.plan === "free") {
-    const cur = await store.getEntitlement(userId);
-    if (cur.plan === "pro" && cur.source && cur.source !== next.source) return;
-  }
-  await store.setEntitlement(userId, next);
 }
