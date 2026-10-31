@@ -1,0 +1,53 @@
+{
+  "id": "s1-04",
+  "locale": "en",
+  "stage": 1,
+  "order": 4,
+  "title": "Choose the answer format",
+  "summary": "Ask for a list, a table or steps — easier to read and ready to use",
+  "minutes": 8,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "If you don't ask for a format, the AI often replies with long paragraphs that are hard to read.\n\nSay exactly what you want:\n- **Bullet points**: \"Sum it up in 5 points\"\n- **Steps**: \"Explain it as steps 1, 2, 3\"\n- **A table** with named columns: \"Day / Morning / Afternoon / Evening\"\n- **Length**: \"Under 100 words\", \"one sentence per point\"\n- **An ending**: \"Put the total cost at the end\"\n\nYou can add the format at the end of your prompt, after the context."
+    },
+    {
+      "type": "example",
+      "bad": "Where should I go in Chiang Mai for 3 days?",
+      "prompt": "I'm taking my 65-year-old mother to Chiang Mai for 3 days and 2 nights. She can't walk for long. Make the plan a table with the columns Day / Morning / Afternoon / Evening, one line per cell, then end with 3 things to watch out for.",
+      "output": "Day | Morning | Afternoon | Evening\nDay 1 | Arrive, check in | Wat Phra Singh (little walking) | Khantoke dinner and show\nDay 2 | Doi Suthep (take the tram up) | Rest at the hotel | Short stroll at the Night Bazaar\nDay 3 | Warorot Market for souvenirs | Riverside café on the Ping | Travel home\n\nWatch out for:\n1. Bring enough of her regular medicine\n2. Mornings and evenings are cool — pack a light jacket\n3. Use a ride app everywhere to avoid long walks",
+      "note": "Naming the columns, the length per cell and the ending gives you a plan that reads like a real table."
+    },
+    {
+      "type": "example",
+      "bad": "Teach me to pay with a QR code",
+      "prompt": "My mother is 60 and just started using her banking app. Explain how to scan a QR code to pay at a shop, as steps 1, 2, 3, no more than 6 steps, one sentence each.",
+      "output": "1. Open the banking app and enter your PIN\n2. Tap \"Scan\" or the QR icon on the home screen\n3. Point the camera at the shop's QR code\n4. Type in the amount to pay\n5. Check the shop name is right, then tap \"Confirm\"\n6. Show the shop the \"Transfer successful\" screen",
+      "note": "Setting the number of steps and their length keeps it short enough for her to follow one step at a time."
+    },
+    {
+      "type": "quiz",
+      "question": "You want to compare 3 phones on price, battery and camera. Which format should you ask for?",
+      "options": [
+        "A long essay",
+        "A table with columns Model / Price / Battery / Camera",
+        "No format — let the AI decide"
+      ],
+      "answer": 1,
+      "explain": "When you compare several things across several points, a table shows the differences most clearly."
+    },
+    {
+      "type": "practice",
+      "task": "You're throwing a birthday party at home for your 10-year-old: 15 guests, a 3,000 baht budget. Write a prompt asking the AI to list what you need to prepare, and clearly set the answer format.",
+      "rubric": [
+        "Clearly names the format (bullet list, table or steps)",
+        "Gives format details (e.g. column names, grouped by category, or number of items)",
+        "Asks for a summary or sets a length (e.g. total cost at the end, one line per item)",
+        "Gives full context (what event, how many guests, what budget)"
+      ],
+      "maxChars": 600,
+      "placeholder": "I'm throwing a birthday party for my child... Make it a..."
+    }
+  ]
+}

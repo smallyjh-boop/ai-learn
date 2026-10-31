@@ -1,0 +1,53 @@
+{
+  "id": "s1-05",
+  "locale": "en",
+  "stage": 1,
+  "order": 5,
+  "title": "Set the tone and limits",
+  "summary": "Say who it's for, how it should sound, and what to avoid",
+  "minutes": 8,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "You say the same thing differently to your boss, your kids or a customer.\n\nTell the AI 3 things:\n- **Tone**: formal, polite, friendly, playful\n- **Reader**: elderly parents, a 10-year-old, your boss, customers\n- **Limits**: no jargon, 5 lines max, no emojis, don't mention...\n\nTip: you can simply say **\"Don't...\"** — the AI follows it well."
+    },
+    {
+      "type": "example",
+      "bad": "Write about phone scams",
+      "prompt": "Write a message warning about phone scams for our family LINE group, for my parents in their 70s. Use a gentle tone, like a child talking to their parents. No technical words, 5 lines max, and don't make it scary.",
+      "output": "Mom, Dad, there are a lot of scam calls lately 🙏\nIf someone calls saying they're the police, a bank or the post office\nand asks you to transfer money or read out a code from a text, just hang up\nReal ones never ask you to send money over the phone\nIf you're ever unsure, call me first, anytime ❤️",
+      "note": "With the reader, tone and limits all set, the message is easy, warm and won't alarm them."
+    },
+    {
+      "type": "example",
+      "bad": "Tell my boss the work is late",
+      "prompt": "I work in an office in Bangkok. The sales report will be 2 days late because I'm waiting for numbers from the branches. Write a LINE message to my manager: polite and formal, 3 lines max, don't blame anyone, and give Thursday as the new date.",
+      "output": "Good morning. This month's sales report will be 2 days later than planned.\nI'm waiting for complete branch data to make sure the numbers are accurate.\nI will send it by this Thursday. Sorry for the delay.",
+      "note": "\"Don't blame anyone\" is a limit that makes the message sound professional."
+    },
+    {
+      "type": "quiz",
+      "question": "You want the AI to explain credit card interest to your teenager. Which instruction helps most?",
+      "options": [
+        "Answer nicely",
+        "Use simple words, no finance terms, use pocket money as the example, 6 lines max",
+        "Make it as long and detailed as possible"
+      ],
+      "answer": 1,
+      "explain": "\"Answer nicely\" says nothing. Option 2 sets the reader, the language level, a limit and the length."
+    },
+    {
+      "type": "practice",
+      "task": "You're the parent rep in your child's class LINE group and need to collect a 350 baht field-trip fee from each family by this Friday. Write a prompt asking the AI to draft the announcement, with a clear tone and limits.",
+      "rubric": [
+        "Sets a clear tone (e.g. polite, friendly, not too formal)",
+        "Names the reader (parents in the class LINE group)",
+        "Includes at least 1 clear limit (e.g. max lines, no pushy wording, few emojis)",
+        "Gives complete facts (what the fee is for, how much each, the deadline)"
+      ],
+      "maxChars": 600,
+      "placeholder": "I'm the parent rep... Write an announcement, tone:... Don't..."
+    }
+  ]
+}

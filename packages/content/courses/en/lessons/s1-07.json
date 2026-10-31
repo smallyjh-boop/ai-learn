@@ -1,0 +1,46 @@
+{
+  "id": "s1-07",
+  "locale": "en",
+  "stage": 1,
+  "order": 7,
+  "title": "Break big tasks into steps",
+  "summary": "Ask the AI for the steps first, then go one step at a time",
+  "minutes": 8,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "If you hand the AI a huge task at once, like “Help me start an online shop”, it skims over everything and goes deep on nothing.\n\nTry this instead:\n1. **Share the goal and key facts** — budget, time, number of people\n2. **Ask the AI to list the steps first**, without details yet\n3. **Go one step at a time**: “Let's start with step 1…”, then move on\n\nYou stay in control, and every answer is actually useful."
+    },
+    {
+      "type": "example",
+      "bad": "Plan my parents' anniversary party",
+      "prompt": "I want to throw a 30th wedding anniversary party for my parents at our home in Nonthaburi. About 25 guests, budget 15,000 baht, 1 month to prepare.\nBreak this into at most 6 main steps, in the order I should do them. No details yet — I'll ask about each step one by one.",
+      "output": "1. Set the date, time and style of the party (week 1)\n2. Make the guest list and invite people on LINE (week 1)\n3. Split the budget: food, decorations, gift (week 2)\n4. Choose the menu, order catering or hire a cook (weeks 2–3)\n5. Prepare decorations and activities, like an old-photo slideshow (week 3)\n6. Double-check everything 2–3 days before (week 4)",
+      "note": "Now you have the big picture. Next, ask something like “Let's do step 3 — help me split the 15,000 baht.”"
+    },
+    {
+      "type": "quiz",
+      "question": "The AI listed 5 steps for opening a clothing shop on Facebook. What should you do next?",
+      "options": [
+        "Ask again: “Just do all the steps for me”",
+        "Pick step 1 and ask for details, adding more about your shop",
+        "Close the chat — you have the list"
+      ],
+      "answer": 1,
+      "explain": "The list is just a map; you still walk it one step at a time. Ask about one thing at a time, with your own details, to get deep, usable answers."
+    },
+    {
+      "type": "practice",
+      "task": "You want to start selling homemade Thai desserts on Facebook (or pick your own big task, like a family trip or moving house).\n\nWrite the **first prompt** that asks the AI to break the task into steps.",
+      "rubric": [
+        "States the goal of the big task clearly",
+        "Gives at least 2 key facts (e.g. budget, time, place, experience)",
+        "Asks the AI to list the steps first, without full details for each",
+        "Limits the number of steps or asks for them in order"
+      ],
+      "maxChars": 600,
+      "placeholder": "e.g. I want to start... My budget is... Break this into steps..."
+    }
+  ]
+}

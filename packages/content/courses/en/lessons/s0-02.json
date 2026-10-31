@@ -1,0 +1,50 @@
+{
+  "id": "s0-02",
+  "locale": "en",
+  "stage": 0,
+  "order": 2,
+  "title": "AI can be wrong",
+  "summary": "Why AI can sound sure and still be wrong, and what you must always check",
+  "minutes": 6,
+  "xp": 10,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "AI doesn't **truly know** everything. It learned from huge amounts of text, and it **guesses the answer that sounds most likely**.\n\nSo AI can:\n- **Make things up**, like numbers, names or phone numbers that don't exist\n- **Miss recent news**, because its information may be out of date\n- **Be wrong while sounding confident**, so it feels believable\n\nAI isn't trying to lie. You just need to know this."
+    },
+    {
+      "type": "explain",
+      "body": "**4 things to check every time**\n- Health: medicine, symptoms\n- Money: investing, tax\n- Law: contracts, your rights\n- Recent news: announcements, prices, opening hours\n\n**Easy ways to check**\n1. **Ask for the source.** Type \"Where does this come from?\" Then open it yourself to see it's real, because AI can make up sources too.\n2. **Ask again in a different way.** If the answers don't match, be careful.\n3. **Look at trusted sources** such as government websites (in Thailand they end in .go.th), hospitals or banks, or ask a doctor or pharmacist."
+    },
+    {
+      "type": "example",
+      "bad": "How do I register for the government cash handout?",
+      "prompt": "I heard there's a government programme giving money to low-income people. Tell me simply where I should check this kind of information, say what your answer is based on, and if you're not sure or your information might be out of date, tell me directly.",
+      "output": "My information about the newest programmes may be out of date, so please don't rely on my answer alone.\n\nGood places to check:\n1. The official government agency website (in Thailand, ending in .go.th)\n2. News from well-known major news outlets\n3. A phone call to the agency running the programme\n\n⚠️ Watch out: if a stranger sends you a \"register to get money\" link by SMS or LINE, don't tap it. It may be a scam.",
+      "note": "A good prompt asks for sources and tells the AI to say when it's unsure. But in the end, you still open the official website and check yourself."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI says a certain herb can \"cure diabetes for good\". What should you do?",
+      "options": [
+        "Believe it, because the answer is very detailed",
+        "Ask for the source, then talk to a doctor or pharmacist first",
+        "Stop the medicine your doctor gave you and take the herb instead"
+      ],
+      "answer": 1,
+      "explain": "Health questions always need an expert. A long, confident answer is not the same as a correct one."
+    },
+    {
+      "type": "practice",
+      "task": "Your mother wants to know if eating garlic every day really lowers blood pressure. Write a prompt for the AI that makes the answer easy to check afterwards.",
+      "rubric": [
+        "Asks a clear question (eating garlic and blood pressure)",
+        "Asks the AI to give sources or evidence for its answer",
+        "Asks the AI to say what it's unsure about, or what needs a doctor or pharmacist",
+        "Gives context, e.g. asking for an older parent, or asks for a simple explanation"
+      ],
+      "maxChars": 500,
+      "placeholder": "Type your prompt here…"
+    }
+  ]
+}

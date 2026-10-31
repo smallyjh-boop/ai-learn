@@ -1,0 +1,62 @@
+{
+  "id": "s0-05",
+  "locale": "en",
+  "stage": 0,
+  "order": 5,
+  "title": "Stay safe with AI",
+  "summary": "What never to type into AI, and how to spot scams that use AI",
+  "minutes": 8,
+  "xp": 10,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "What you type into an AI chat may be stored. **Never type these:**\n- ID card numbers, or photos of ID cards\n- Credit card numbers, bank account numbers, OTP codes\n- Any password\n- Other people's private details, like a customer's or friend's phone number, address or health problems\n\n**Tip:** use placeholders like [customer name] or [account number], then fill in the real details yourself later."
+    },
+    {
+      "type": "explain",
+      "body": "**Scammers use AI too.** Watch out for these 3:\n- **A call that sounds just like your child or grandchild.** AI can copy voices. They say there's been an accident and you must transfer money now.\n- **Fake videos (deepfakes).** The face and voice look like a celebrity or an official, asking you to invest or share information.\n- **\"Get rich with AI investing\".** They claim an AI bot trades for you with guaranteed daily profit.\n\n**Golden rules when someone asks for money**\n1. **Hang up first.** Don't transfer while you're panicking.\n2. **Call back on a number you saved yourself**, not one they give you.\n3. **No investment has guaranteed profit.** If they promise one, be suspicious.\n4. Not sure? Ask your family, or in Thailand call the online scam hotline **1441**."
+    },
+    {
+      "type": "example",
+      "bad": "Write a letter to my bank to cancel my credit card. My name is Somsri Jaidee, ID number 1-2345-67890-12-3, card number 1234 5678 9012 3456",
+      "prompt": "Write a short, polite letter to my bank asking to cancel my credit card. Use [Full name] and [Card number] instead of real details. I'll fill them in myself.",
+      "output": "Dear [Bank name],\n\nI, [Full name], holder of credit card number [Card number], would like to cancel this card from [Date].\n\nPlease process this request. Thank you.\n\nYours sincerely,\n[Full name]",
+      "note": "You get a letter that works just as well, and your real details never go into the chat."
+    },
+    {
+      "type": "quiz",
+      "question": "Someone calls and sounds exactly like your son. He says he crashed the car and needs 20,000 baht sent to a friend's account right now. What should you do?",
+      "options": [
+        "Send it quickly, it really sounds like him",
+        "Hang up, then call your son on the number you saved",
+        "Ask for the friend's account and send half first"
+      ],
+      "answer": 1,
+      "explain": "AI can copy voices. Sounding the same doesn't mean it's really him. Always call back on a number you know."
+    },
+    {
+      "type": "quiz",
+      "question": "Which one is safe to type into an AI chat?",
+      "options": [
+        "My LINE password",
+        "My shop's menu and the price of each dish",
+        "A photo of a customer's ID card",
+        "The OTP code my bank just sent"
+      ],
+      "answer": 1,
+      "explain": "Shop information that's already public is fine. Passwords, OTPs and other people's details are not."
+    },
+    {
+      "type": "practice",
+      "task": "You get a LINE message from an account with your daughter's name and photo: \"Mum, I've got a new LINE account. Something urgent came up, can I borrow 5,000 baht? Please send it to my friend's account.\" Write a prompt asking the AI to help you judge whether this message is a scam.",
+      "rubric": [
+        "Tells the AI what the suspicious message says (new LINE account, urgent loan, send to someone else's account)",
+        "Asks the AI whether it's likely a scam and what the warning signs are",
+        "Asks what to do next or how to check",
+        "Doesn't include their own sensitive details such as account numbers, passwords or OTPs"
+      ],
+      "maxChars": 600,
+      "placeholder": "Type your prompt here…"
+    }
+  ]
+}

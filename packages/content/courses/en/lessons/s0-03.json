@@ -1,0 +1,50 @@
+{
+  "id": "s0-03",
+  "locale": "en",
+  "stage": 0,
+  "order": 3,
+  "title": "Open your first AI tool",
+  "summary": "Meet the popular AI apps, get started on your phone, and learn the key buttons",
+  "minutes": 7,
+  "xp": 10,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "There are several chat AIs, and they all work in a similar way. For example:\n- **ChatGPT** from OpenAI\n- **Gemini** from Google\n- **Claude** from Anthropic\n- **Copilot** from Microsoft\n\nYou don't need to try them all. **Pick one.** Everything you learn in this app works with any of them."
+    },
+    {
+      "type": "explain",
+      "body": "**Get started on your phone in 3 steps**\n1. **Open the website** in Chrome or Safari, or **download the app** from the App Store / Play Store\n2. **Sign up or log in** with your Google, Apple or email account\n3. **Start typing**\n\n**The free version is enough to begin.** No need to pay yet.\n\n**Be careful:** when downloading, check the developer's name. There are many fake apps with similar names."
+    },
+    {
+      "type": "explain",
+      "body": "**Key buttons on the screen**\n- **Message box**: at the bottom. Type your question and tap send. In some apps you can tap the microphone and speak instead.\n- **New chat**: start a conversation about something new. Usually a pencil icon or a \"+\".\n- **Chat history**: a list of your past chats, usually in the three-line menu. Tap one to continue it.\n\nEach app looks a little different, but they all have these three."
+    },
+    {
+      "type": "example",
+      "bad": "Help me",
+      "prompt": "Hi, I'm using AI for the first time. I sell curry and rice at a small stall in Bangkok. Tell me 3 ways AI can help my shop, in short, simple words.",
+      "output": "Hi, nice to meet you! Here are some easy ways to start:\n\n1. Plan the daily menu — tell me what ingredients you have, and I'll suggest which curries to cook today\n2. Write sales posts — I can write tasty-sounding posts for Facebook or LINE\n3. Work out costs and prices — I can help you calculate how many baht to charge per plate to make a profit\n\nWhich one would you like to try first?",
+      "note": "Your first message doesn't have to be perfect. Just say who you are and what you want, and the answer gets much more useful."
+    },
+    {
+      "type": "quiz",
+      "question": "You've finished asking the AI about a tom yum recipe. Now you want help writing a New Year card. What should you tap?",
+      "options": ["The message box", "New chat", "Delete the app and reinstall it"],
+      "answer": 1,
+      "explain": "When you change topic, tap \"New chat\" so the AI doesn't mix it up with the old one."
+    },
+    {
+      "type": "practice",
+      "task": "Write your first message to the AI: briefly say what you do or what you're interested in, then ask the AI for 3 ways it could help you.",
+      "rubric": [
+        "Says what they do for work or what they're interested in",
+        "Says clearly what they want from the AI (ways it can help)",
+        "Gives a number: 3 ways",
+        "Leaves out unneeded personal details such as full real name, phone number or address"
+      ],
+      "maxChars": 400,
+      "placeholder": "Type your first message here…"
+    }
+  ]
+}
