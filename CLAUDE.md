@@ -27,28 +27,29 @@
 **开发顺序（已与用户确认）：先做好网站 → NAS 内测 → Android App → iOS App 放最后。**
 账号体系独立，不与 lucky 共用。
 
-网站公测所需功能已完成：
-- 后端：Postgres 迁移（启动时自动执行）、LINE 网页登录（授权码）、Google 登录、Stripe 订阅
-  （Checkout / 订阅管理页 / webhook 签名校验）、AI 用量记录与当日告警、删除账号、预约名单
-- 网站：落地页（大纲 + 定价 + 预约邮箱）、学习地图和课程页服务端渲染（构建时静态生成）、
-  sitemap.xml / robots.txt、登录页、账户页、价格页、隐私政策；DevLogin 只在开发环境出现
-- 课程：阶段 0、1 共 15 课，泰/中/英三语（泰文待母语者审校）
+已完成：
+- 后端：Postgres 迁移（启动时自动执行）、LINE（网页授权码 / App id_token）、Google、Apple（JWKS 本地校验）登录、
+  Stripe 订阅（Checkout / 订阅管理页 / webhook 签名校验）、RevenueCat 回调、会员按付款来源分行存储并合并、
+  AI 用量记录 + 当日告警 + webhook 推送、练习内容审核（点评模型判 on_task）、删除账号、预约名单
+- 网站：落地页、学习地图和课程页服务端渲染（构建时静态生成）、sitemap / robots、登录、账户、价格、隐私政策
+- App（Expo SDK 58）：LINE / Google / Apple 登录、RevenueCat 付费墙、每日学习提醒（本地通知）、账户页（含删除账户）、
+  课程播放与网站一致。只验证了 tsc、expo export（android / ios 打包）、expo-doctor，**还没在真机上跑过**
+- 课程：阶段 0、1（免费）+ 阶段 2（付费）共 25 课，泰/中/英三语（泰文待母语者审校）
 - 测试：`pnpm --filter @ai-learn/api test`；设 `TEST_DATABASE_URL` 时同一套测试再跑一遍 Postgres 版
 
 ## 待办（按优先级）
-1. NAS 内测：填 `.env`（JWT_SECRET、ANTHROPIC_API_KEY、LINE、Google、WEB_URL 等），
-   `docker compose up -d --build`；在 LINE / Google / Stripe 后台登记回调地址（见 .env.example 注释）
+1. NAS 内测（用户操作）：填 `.env`，`docker compose up -d --build`；在 LINE / Google / Stripe 后台登记回调地址（见 .env.example）
 2. 泰语母语者审校课程和界面文字；隐私政策请法律顾问看一遍；设置 NEXT_PUBLIC_CONTACT_EMAIL
-3. 内测反馈：练习内容审核（目前只靠系统提示词拒绝无关/有害内容）、AI 用量告警接到通知渠道
-4. Android App：接入真实登录（LINE SDK、Google）、RevenueCat（App User ID = 我们的 user id）、
-   每日学习提醒推送（expo-notifications）；移动端课程播放与网站版保持一致
-5. 上架 App 前：`entitlements` 改为每个付款来源一行（目前单行 + 「不覆盖另一来源的有效会员」保护）；
-   可选：identities 表支持一个账号绑定多种登录方式
-6. iOS App：Apple 登录 + identityToken 校验（JWKS，`apps/api/src/auth/providers.ts`）
-7. 阶段 2–5 课程、成就徽章、提示词收藏库、结业证书
+3. Android 上架准备（用户操作为主）：EAS 账号、`eas build --profile development` 真机测试、
+   Google Cloud 建 Android OAuth 客户端（包名 + SHA-1）、LINE channel 加 Android 设置、
+   Play Console 建订阅商品并接入 RevenueCat；替换 `com.example.ailearn` 包名和 App 图标
+4. 根据内测反馈调整课程，再写阶段 3–5（约 34 课）
+5. 成就徽章、提示词收藏库、结业证书
+6. iOS 上架：Apple Developer 账号、App Store Connect 订阅商品、`GOOGLE_IOS_URL_SCHEME`
 
 ## 已知取舍
-- 同一邮箱用 LINE 和 Google 登录是两个账号（不按邮箱自动合并，防账号接管）
+- 同一邮箱用 LINE 和 Google 登录是两个账号（不按邮箱自动合并，防账号接管）；以后需要可加 identities 表做手动绑定
+- App 内付费墙不放网站付款链接（商店规定）；网站付款的会员在 App 里登录即可使用
 - 课程页是构建时静态生成的：改课程 JSON 后要重新构建网站（API 端重启即可）
 - 付费课只把第一段讲解渲染进页面；会员内容由 API 校验后返回
 

@@ -233,6 +233,25 @@ for (const kind of kinds) {
   });
 }
 
+test("Apple 登录：校验签名和 audience", async () => {
+  const { generateKeyPair, exportJWK, SignJWT, createLocalJWKSet } = await import("jose");
+  const { privateKey, publicKey } = await generateKeyPair("RS256");
+  const jwk = { ...(await exportJWK(publicKey)), kid: "k1", alg: "RS256" };
+  const appleKeys = createLocalJWKSet({ keys: [jwk] });
+  config.auth.appleAudiences = ["com.example.ailearn"];
+  const sign = (aud: string) => new SignJWT({ email: "a@privaterelay.appleid.com", email_verified: "true" })
+    .setProtectedHeader({ alg: "RS256", kid: "k1" }).setIssuer("https://appleid.apple.com").setAudience(aud)
+    .setSubject("apple-user-1").setIssuedAt().setExpirationTime("10m").sign(privateKey);
+
+  const app = await buildApp({ store: new MemoryStore(), quota: new MemoryQuota(), ai: new MockProvider(), catalog, appleKeys });
+  const ok = await app.inject({ method: "POST", url: "/auth/apple", payload: { idToken: await sign("com.example.ailearn"), name: "Somchai" } });
+  assert.equal(ok.statusCode, 200);
+  assert.equal(ok.json().me.name, "Somchai");
+  assert.equal(ok.json().me.email, "a@privaterelay.appleid.com");
+  const bad = await app.inject({ method: "POST", url: "/auth/apple", payload: { idToken: await sign("com.other.app") } });
+  assert.equal(bad.statusCode, 401);
+});
+
 test("连续打卡计算", () => {
   assert.equal(nextStreak(null, 0, "2026-11-01"), 1);
   assert.equal(nextStreak("2026-10-31", 3, "2026-11-01"), 4);

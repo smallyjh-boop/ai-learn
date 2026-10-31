@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import Line, { Scope } from "@xmartlabs/react-native-line";
 import { GoogleSignin, isSuccessResponse } from "@react-native-google-signin/google-signin";
+import * as AppleAuthentication from "expo-apple-authentication";
 import type { AuthResponse, Locale } from "@ai-learn/shared";
 import { api } from "./api";
 import { env } from "./config";
@@ -39,6 +40,24 @@ export async function loginWithGoogle(locale: Locale): Promise<AuthResponse | nu
   if (!isSuccessResponse(r)) return null;
   if (!r.data.idToken) throw new Error("Google did not return an id token");
   return api.google(r.data.idToken, locale);
+}
+
+/** Apple 登录（仅 iOS；App Store 要求提供了第三方登录就必须同时提供 Apple 登录） */
+export const appleAvailable = () => Platform.OS === "ios" && AppleAuthentication.isAvailableAsync();
+
+export async function loginWithApple(locale: Locale): Promise<AuthResponse | null> {
+  try {
+    const cred = await AppleAuthentication.signInAsync({
+      requestedScopes: [AppleAuthentication.AppleAuthenticationScope.FULL_NAME, AppleAuthentication.AppleAuthenticationScope.EMAIL],
+    });
+    if (!cred.identityToken) throw new Error("Apple did not return an identity token");
+    // 名字只有第一次授权时才有
+    const name = [cred.fullName?.givenName, cred.fullName?.familyName].filter(Boolean).join(" ") || null;
+    return await api.apple(cred.identityToken, locale, name);
+  } catch (e) {
+    if ((e as { code?: string }).code === "ERR_REQUEST_CANCELED") return null;
+    throw e;
+  }
 }
 
 /** 退出时也退出 Google，下次可以换账号 */

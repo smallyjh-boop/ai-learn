@@ -36,6 +36,7 @@ const config: ExpoConfig = {
     "expo-secure-store",
     "expo-localization",
     "expo-web-browser",
+    "expo-apple-authentication",
     ["expo-notifications", { color: "#0f7b6c" }],
     ["expo-build-properties", { ios: { useFrameworks: "static" } }],
     "@xmartlabs/react-native-line",

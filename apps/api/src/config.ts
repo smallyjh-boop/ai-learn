@@ -34,6 +34,8 @@ export const config = {
     lineChannelId: env.LINE_CHANNEL_ID || "",
     lineChannelSecret: env.LINE_CHANNEL_SECRET || "",
     googleClientIds: list(env.GOOGLE_CLIENT_ID),
+    /** iOS App 的 bundle id（Apple identityToken 的 aud），可逗号分隔多个 */
+    appleAudiences: list(env.APPLE_BUNDLE_ID),
   },
 
   revenuecatToken: env.REVENUECAT_WEBHOOK_TOKEN || "",

@@ -1,3 +1,5 @@
+import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from "jose";
+
 /**
  * 第三方登录：前端拿到 id_token 后交给后端验证，后端换成自己的 JWT。
  * 泰国用户优先 LINE，其次 Google；iOS 上架必须同时提供 Apple 登录。
@@ -53,7 +55,28 @@ export async function verifyGoogle(idToken: string, clientIds: string[]): Promis
   return { provider: "google", providerId: p.sub, email: verified ? p.email ?? null : null, name: p.name ?? null };
 }
 
-/** Apple：需用 Apple 公钥 (JWKS) 校验 identityToken —— TODO 上架 iOS 前实现 */
-export async function verifyApple(_identityToken: string): Promise<VerifiedIdentity> {
-  throw new Error("Apple 登录尚未实现");
+/**
+ * Apple：用 Apple 公钥（JWKS）本地校验 identityToken 的签名、issuer、audience（App 的 bundle id）和有效期。
+ * 名字只在用户第一次授权时由客户端拿到，所以由客户端一并传上来。
+ * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
+ */
+const appleJwks = createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys"));
+
+export async function verifyApple(
+  identityToken: string,
+  audiences: string[],
+  name: string | null = null,
+  keys: JWTVerifyGetKey = appleJwks,
+): Promise<VerifiedIdentity> {
+  if (!audiences.length) throw new Error("APPLE_BUNDLE_ID 未配置");
+  let payload;
+  try {
+    ({ payload } = await jwtVerify(identityToken, keys, { issuer: "https://appleid.apple.com", audience: audiences }));
+  } catch {
+    throw new Error("Apple token 无效");
+  }
+  const p = payload as { sub?: string; email?: string; email_verified?: boolean | string };
+  if (!p.sub) throw new Error("Apple token 缺少 sub");
+  const verified = p.email_verified === true || p.email_verified === "true";
+  return { provider: "apple", providerId: p.sub, email: verified ? p.email ?? null : null, name };
 }

@@ -18,6 +18,7 @@ import { runPractice } from "./ai/practice";
 import { exchangeLineCode, verifyGoogle, verifyLine, verifyApple, type VerifiedIdentity } from "./auth/providers";
 import type { StripeBilling } from "./billing/stripe";
 import { Alerts } from "./alerts";
+import type { JWTVerifyGetKey } from "jose";
 
 export interface Deps {
   store: Store;
@@ -26,6 +27,8 @@ export interface Deps {
   catalog: Catalog;
   /** 没配 STRIPE_SECRET_KEY 时为空，付款相关接口返回 NOT_CONFIGURED */
   billing?: StripeBilling;
+  /** Apple 公钥（测试时注入本地密钥，默认从 Apple 获取） */
+  appleKeys?: JWTVerifyGetKey;
 }
 
 declare module "@fastify/jwt" {
@@ -97,7 +100,7 @@ export async function buildApp(deps: Deps) {
     devLogin: !config.isProd,
   }));
 
-  const TokenBody = z.object({ idToken: z.string().min(10), locale: z.string().optional() });
+  const TokenBody = z.object({ idToken: z.string().min(10), locale: z.string().optional(), name: z.string().max(100).nullish() });
   const bodyLocale = (req: FastifyRequest, v?: string) => (isLocale(v) ? v : localeOf(req));
 
   /** App 端：LINE SDK 拿到 id_token 后调用 */
@@ -141,9 +144,10 @@ export async function buildApp(deps: Deps) {
     const body = TokenBody.safeParse(req.body);
     if (!body.success) return fail(reply, 400, { error: "idToken required", code: "BAD_REQUEST" });
     try {
-      return await issue(await verifyApple(body.data.idToken), bodyLocale(req, body.data.locale));
+      const id = await verifyApple(body.data.idToken, config.auth.appleAudiences, body.data.name ?? null, deps.appleKeys);
+      return await issue(id, bodyLocale(req, body.data.locale));
     } catch (e) {
-      return fail(reply, 501, { error: (e as Error).message, code: "NOT_CONFIGURED" });
+      return fail(reply, 401, { error: (e as Error).message, code: "UNAUTHORIZED" });
     }
   });
 

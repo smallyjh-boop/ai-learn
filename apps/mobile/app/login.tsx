@@ -3,7 +3,8 @@ import { ActivityIndicator, Linking, Pressable, ScrollView, Text, TextInput, Vie
 import { router } from "expo-router";
 import { t, type AuthResponse } from "@ai-learn/shared";
 import { api, deviceLocale } from "../src/api";
-import { loginAvailable, loginWithGoogle, loginWithLine } from "../src/auth";
+import * as AppleAuthentication from "expo-apple-authentication";
+import { appleAvailable, loginAvailable, loginWithApple, loginWithGoogle, loginWithLine } from "../src/auth";
 import { env } from "../src/config";
 import { signIn } from "../src/session";
 import { useTheme } from "../src/theme";
@@ -17,6 +18,9 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [devLogin, setDevLogin] = useState(false);
   const [email, setEmail] = useState("");
+  const [apple, setApple] = useState(false);
+
+  useEffect(() => { void Promise.resolve(appleAvailable()).then((v) => setApple(Boolean(v))); }, []);
 
   useEffect(() => {
     if (__DEV__) api.authConfig().then((cfg) => setDevLogin(cfg.devLogin)).catch(() => undefined);
@@ -47,7 +51,16 @@ export default function Login() {
           <Text style={s.text}>{tx.loginGoogle}</Text>
         </Pressable>
       )}
-      {!avail.line && !avail.google && !devLogin && <Text style={{ color: c.warn }}>{tx.loginNotConfigured}</Text>}
+      {apple && (
+        <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+          buttonStyle={c.bg === "#15171a" ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+          cornerRadius={10}
+          style={{ height: 48, marginBottom: 12 }}
+          onPress={() => run(() => loginWithApple(deviceLocale))}
+        />
+      )}
+      {!avail.line && !avail.google && !apple && !devLogin && <Text style={{ color: c.warn }}>{tx.loginNotConfigured}</Text>}
       {devLogin && (
         <View style={{ gap: 8, marginTop: 16 }}>
           <Text style={s.muted}>{tx.devLogin}</Text>
