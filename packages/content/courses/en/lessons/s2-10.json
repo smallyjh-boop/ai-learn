@@ -1,0 +1,62 @@
+{
+  "id": "s2-10",
+  "locale": "en",
+  "stage": 2,
+  "order": 10,
+  "title": "Stage 2 wrap-up: a real-life project",
+  "summary": "Use AI to plan a parent's 60th birthday, from budget to the big day",
+  "minutes": 12,
+  "xp": 40,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Great work — you've almost finished Stage 2! 🎉 Let's recap what AI can do for you in daily life:\n\n1. **Summarizing**: say how many points and who it's for\n2. **Messages and emails**: say who's reading, the tone and the length\n3. **Translating**: say where it'll be used and who'll read it\n4. **Looking things up**: ask for sources, then check official websites\n5. **Trip planning**: give your budget, number of days and who's coming\n6. **Studying**: ask for simple explanations, examples, one step at a time\n7. **Cooking**: list what you have, how many people, any health needs\n8. **Money and choices**: use rough numbers — AI helps you think, you decide\n9. **Photos**: say what the photo shows, and hide personal info first\n\nEvery time: **keep private info out**, and **check important things yourself**."
+    },
+    {
+      "type": "explain",
+      "body": "Real-life projects usually need several skills at once. Take **Dad's 60th birthday**: you need a budget, an invitation, a menu and a plan for the day.\n\nTo make it easy:\n1. **Give the full context in your first message**: who it's for, how many guests, where, the budget, any limits\n2. **Work in parts**: ask for an overall plan first, then go through each part in the same chat\n3. **Prices from AI are only estimates**: call or check with real shops\n4. **Leave out guest names and phone numbers**: use placeholders like [guest name]"
+    },
+    {
+      "type": "example",
+      "bad": "Help me throw a birthday party for my dad",
+      "prompt": "My dad turns 60 next month. I want to host it at home in Nonthaburi on a Saturday, with about 25 guests — family and neighbours.\nTotal budget: 15,000 baht. In the morning I'd like to invite 5 monks for a merit-making ceremony and offer them food; in the evening we'll have dinner together.\nDad has diabetes and loves Isaan food. Mum is 62 and can't stand for long.\nStep one: split the budget into categories with an amount for each, and make a 4-week prep checklist, week by week.\nMark any estimated prices with “about”.",
+      "output": "Budget: 15,000 baht (estimates — check with real shops)\n- Merit-making for 5 monks (food, offerings, envelopes): about 3,000\n- Isaan dinner for 25: about 6,500\n- Water, ice and drinks: about 1,500\n- Low-sugar cake: about 1,000\n- Table, chair and tent rental: about 2,000\n- Decorations and birthday banner: about 500\n- Reserve: 500\n\n4-week checklist\nWeek 1: Invite monks from the local temple; send the invitation in the family LINE group\nWeek 2: Choose the menu; order catering or book a cook; book tables and chairs (a chair with a backrest for Mum)\nWeek 3: Order the low-sugar cake; confirm who's definitely coming\nWeek 4: Buy the offerings; prepare decorations; call to reconfirm food and tent\n\nWhat next — the invitation message, or Isaan dishes that suit someone with diabetes?",
+      "note": "The first message gives full context (event, guests, place, budget, parents' health) and asks for just step one, so the answer is detailed. Then you work through each part in the same chat."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI says renting tables, chairs and a tent costs “about 2,000 baht”. What next?",
+      "options": [
+        "Trust it and set aside exactly 2,000",
+        "Call 2–3 rental shops near you and adjust the budget to real prices",
+        "Tell the AI to book a shop for you"
+      ],
+      "answer": 1,
+      "explain": "The AI doesn't know real prices at shops near you. Its numbers are a starting point — check with real shops before you pay."
+    },
+    {
+      "type": "quiz",
+      "question": "You want AI to write an invitation for 25 relatives. Which approach is best?",
+      "options": [
+        "Paste in every relative's name, phone number and address",
+        "Just type “write an invitation”",
+        "Ask for a warm, polite invitation for the family LINE group, using [guest name] instead of real names, with the date, time and a reply-by date"
+      ],
+      "answer": 2,
+      "explain": "Option 3 covers the reader, tone and must-have details, and uses a placeholder. The AI doesn't need your relatives' phone numbers or addresses."
+    },
+    {
+      "type": "practice",
+      "task": "Your turn! Pick a real event, such as **your mum's or dad's 60th birthday** (or something else close to home, like a house-blessing or a class reunion).\n\nWrite your first message to the AI asking it to help plan the event, covering **the budget, the invitation message, the menu and the schedule for the day**. (Ask for everything at once, or ask for an overall plan and go part by part.)",
+      "rubric": [
+        "Full context: whose event, what kind, roughly how many guests, and the place or timing",
+        "States a budget and at least 1 limit, e.g. health conditions, food restrictions, elderly guests",
+        "Asks for at least 3 of: budget, invitation, menu, schedule — and sets a format, e.g. bullet points, categories, times",
+        "Says who the invitation is for or its tone, e.g. the family LINE group, warm and polite",
+        "Thinks about accuracy or safety, e.g. asks to mark estimated prices or what to check with real shops, or uses placeholders like [guest name] instead of real personal info"
+      ],
+      "maxChars": 900,
+      "placeholder": "My mum turns 60 next month... about ... guests, budget ... Please help me..."
+    }
+  ]
+}

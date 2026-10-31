@@ -1,0 +1,50 @@
+{
+  "id": "s2-06",
+  "locale": "en",
+  "stage": 2,
+  "order": 6,
+  "title": "Use AI as a tutor",
+  "summary": "Have the AI teach step by step instead of handing over answers, for your kids or yourself",
+  "minutes": 8,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "If your child is stuck on homework and the AI just gives the answer, the homework gets done, but your child learns nothing.\n\nUse the AI as a **tutor** instead. Tell it 4 things:\n- **Grade or age**: e.g. \"my child is in Grade 4\", so it uses words that fit\n- **What they don't get**: point to the exact spot they're stuck\n- **Don't give the answer yet**: explain step by step and ask questions so they think\n- **Practice questions**: 2–3 similar ones, with answers kept at the end\n\nTip: ask for **everyday examples**, like snacks, pocket money or toys."
+    },
+    {
+      "type": "example",
+      "bad": "Is 1/2 equal to 2/4?",
+      "prompt": "My child is in Grade 4 and doesn't understand why 1/2 and 2/4 are the same.\nExplain it for a Grade 4 kid in simple words, using pizza or snacks, step by step.\nDon't give the answer straight away. Ask questions so they think it through.\nThen give 3 similar practice questions, with the answers at the very end for the parent.",
+      "output": "Imagine 2 pizzas that are exactly the same size 🍕\n\nStep 1: Cut the first pizza into 2 equal pieces. Take 1 piece. That's 1/2\nStep 2: Cut the second pizza into 4 equal pieces. Take 2 pieces. That's 2/4\nStep 3: Put what you took side by side. Which one is bigger?\n\nThink about this: if you cut a pizza into 8 pieces, how many do you need for exactly half?\n\nTry these:\n1. Is 1/3 the same as 2/6?\n2. 1/2 = ?/6\n3. Two brothers each have a roti the same size. The older one cuts his into 2 and eats 1 piece. The younger one cuts his into 4. How many pieces must he eat to have the same amount?\n\nAnswers (for parents): 1. Yes 2. 3 3. 2 pieces",
+      "note": "The AI doesn't hand over the answer. It walks the child through each step and adds practice, so they really understand instead of copying."
+    },
+    {
+      "type": "explain",
+      "body": "**It works for you too**: English for talking to customers, Chinese for selling, or learning Excel.\n\nTell the AI:\n- Your level now, e.g. \"I know some words but can't make full sentences\"\n- What you need it for, e.g. \"welcoming foreign customers at my massage shop\"\n- Teach a little at a time, then **quiz me one question at a time and wait for my answer before saying if I'm right**\n\nCareful: AI makes mistakes too, especially with calculations. If an answer looks odd, check the textbook or ask a teacher."
+    },
+    {
+      "type": "quiz",
+      "question": "Your child in Grade 2 can't do subtraction with borrowing. Which prompt is best?",
+      "options": [
+        "Give me the answer to this one",
+        "Explain borrowing in subtraction step by step for a Grade 2 kid, using sweets as the example. Don't give the answer yet; ask questions so they think",
+        "Explain borrowing in subtraction in as much mathematical detail as possible"
+      ],
+      "answer": 1,
+      "explain": "Option 2 gives the grade, uses an everyday example and lets the child think. Option 1 only gets an answer, and option 3 may be too hard for their age."
+    },
+    {
+      "type": "practice",
+      "task": "Your child or grandchild is in Grade 3 and stuck on division homework (or use the real grade and subject your kids are studying).\n\nWrite a prompt asking the AI to help them learn, not do the homework for them.",
+      "rubric": [
+        "States the child's grade or age and asks for language that fits that age",
+        "Says what the topic is and where the child is stuck",
+        "Asks for step-by-step explanation or guiding questions instead of the answer right away",
+        "Asks for practice questions (e.g. how many, or answers kept at the end)"
+      ],
+      "maxChars": 600,
+      "placeholder": "My child is in Grade ... and doesn't understand ... Please explain step by step, don't give the answer yet... Then give ... practice questions..."
+    }
+  ]
+}

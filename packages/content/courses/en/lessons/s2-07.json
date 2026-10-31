@@ -1,0 +1,58 @@
+{
+  "id": "s2-07",
+  "locale": "en",
+  "stage": 2,
+  "order": 7,
+  "title": "Plan your meals with AI",
+  "summary": "Cook from what's in the fridge, plan a week of meals and get a shopping list",
+  "minutes": 9,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "\"What should we eat today?\" is a hard question every single day. AI can help in 3 ways:\n\n1. **What's in the fridge**: ask for dishes using what you already have\n2. **A week of meals**: plan ahead and get a **shopping list**\n3. **Adjust for people and budget**: \"make it for 6 people\", \"bring it down to 800 baht\"\n\nGive it these details:\n- How many people, and any kids or elderly\n- Who doesn't eat what, any allergies, how spicy\n- Your budget and how much time you have to cook\n- What equipment you have, e.g. just one pan, a rice cooker or a microwave"
+    },
+    {
+      "type": "example",
+      "bad": "What should I cook today?",
+      "prompt": "In my fridge: 4 eggs, 200 g minced pork, 1 bunch of morning glory, 2 tomatoes, spring onions and leftover rice from yesterday.\nBasic seasonings: fish sauce, soy sauce, oyster sauce, garlic.\nI have only one pan. Dinner for 3, and my 6-year-old doesn't eat spicy food.\nSuggest 2 dishes using these, ready in 30 minutes, with short step-by-step instructions.",
+      "output": "Dish 1: Fried rice with minced pork and tomato\n1. Fry garlic with half the pork (100 g) until cooked\n2. Add chopped tomatoes and cook until soft\n3. Crack in 2 eggs, stir, then add the rice\n4. Season with soy sauce and a little fish sauce, top with spring onions\n\nDish 2: Stir-fried morning glory with pork (no chilli)\n1. Fry garlic with the rest of the pork\n2. Add the morning glory and stir-fry quickly on high heat\n3. Season with oyster sauce and fish sauce\n\nTip: make the fried rice first, plate it, rinse the pan and then cook the greens so they stay hot and crunchy.\nSave the last 2 eggs for fried eggs at breakfast.",
+      "note": "By listing the ingredients, equipment, number of people and the no-spice rule, you get dishes you can actually make in your kitchen."
+    },
+    {
+      "type": "example",
+      "bad": "Make me a weekly meal plan",
+      "prompt": "We're a family of 4: two parents and two kids (Grade 2 and Grade 5).\nPlan dinners for Monday to Friday, simple home cooking, 2 dishes a day.\nTotal budget 1,200 baht max, one trip to the fresh market on Saturday.\nThe kids don't eat spicy food. Reuse ingredients across days so nothing goes to waste.\nThen make a shopping list grouped by category with rough amounts.",
+      "output": "Dinner plan\n- Monday: clear soup with egg tofu and minced pork + Thai omelette\n- Tuesday: chicken stir-fried with ginger (chilli on the side for adults) + stir-fried cabbage\n- Wednesday: napa cabbage and pork soup + fried mackerel\n- Thursday: garlic fried pork + mixed stir-fried vegetables\n- Friday: chicken fried rice + egg tofu and pork soup\n\nShopping list\n- Meat and fish: minced pork 600 g, pork loin 400 g, chicken breast 800 g, 4 mackerel\n- Vegetables: 1 cabbage, 1 napa cabbage, 2 carrots, 1 pack baby corn, ginger, garlic, spring onions, coriander\n- Other: 10 eggs, 3 tubes of egg tofu\n\nRough budget: about 1,000–1,200 baht, depending on prices at your local market\nTip: when you get home, split the meat into small bags by day and freeze them; thaw before cooking.",
+      "note": "Asking to reuse ingredients and group the list means one market trip covers everything. Real prices vary by place, so treat the total as a rough guide."
+    },
+    {
+      "type": "explain",
+      "body": "**Be careful with health**\n\nIf someone at home:\n- has a long-term condition like diabetes, high blood pressure or kidney disease\n- has a food allergy, e.g. shrimp or peanuts\n- is pregnant, or is on a special diet from their doctor\n\n**Ask a doctor or dietitian first** how they should eat, then tell the AI, e.g. \"The doctor says less salt and fewer carbs. Suggest meals that fit.\"\n\nThe AI only gives **ideas**, not medical advice, and it can get things wrong. With allergies, always read labels and check ingredients yourself."
+    },
+    {
+      "type": "quiz",
+      "question": "Your 65-year-old father has diabetes and you want meal ideas from AI. What's the best approach?",
+      "options": [
+        "Let the AI's meal plan replace the doctor's advice",
+        "Don't mention his diabetes, so the AI can answer more easily",
+        "Tell the AI what the doctor advised (e.g. less sugar, fewer carbs), get ideas, then check them with the doctor or a dietitian"
+      ],
+      "answer": 2,
+      "explain": "AI can suggest meals, but the doctor is the one who really knows your father's health. Give the AI the conditions and let the expert have the final say."
+    },
+    {
+      "type": "practice",
+      "task": "Plan a week of meals for your household (or an imaginary one), with a shopping list.\n\nWrite a prompt that gives the AI the full picture of your home.",
+      "rubric": [
+        "States how many people are eating and whether there are kids or elderly",
+        "Gives at least 1 food restriction (e.g. no spicy food, no beef, an allergy, low salt)",
+        "Gives a budget as a number (baht) and the time span (how many days, which meals)",
+        "Asks for a shopping list with a clear format (e.g. grouped by category, with amounts)",
+        "Adds at least 1 more condition (e.g. reuse ingredients, cooking time per dish, equipment available, where you shop)"
+      ],
+      "maxChars": 700,
+      "placeholder": "We're a family of ... ... doesn't eat ... Budget ... baht. Plan ... days of ... and make a shopping list..."
+    }
+  ]
+}

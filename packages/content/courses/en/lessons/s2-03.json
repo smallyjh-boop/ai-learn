@@ -1,0 +1,51 @@
+{
+  "id": "s2-03",
+  "locale": "en",
+  "stage": 2,
+  "order": 3,
+  "title": "Translate with AI",
+  "summary": "Thai, Chinese, English — get the meaning and the tone right, not word-for-word",
+  "minutes": 8,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Living or doing business in Thailand means translating all the time — for landlords, teachers, customers. AI beats old-school translation apps because **you can tell it what the text is for** 🌏\n\nWhen you ask for a translation, say:\n1. **From which language into which**\n2. **Where it's used and who reads it**: a message to your Thai landlord, a menu for tourists\n3. **The tone**: as polite as the original, casual, formal\n4. **Flag anything uncertain**: words with no direct equivalent, or more than one possible meaning\n\nFor Thai, say **whether you're male or female** (ครับ/ค่ะ), and ask the AI to **add a back-translation in English** so you can check the meaning even if you can't read Thai.\n\nSame as before: instructions first, then paste the text to translate below."
+    },
+    {
+      "type": "example",
+      "bad": "Translate into Thai: Hi, this is room 305. My air-con hasn't been cooling for two days and it's dripping water. Could you please send a technician? I'm home every day after 6 pm. Thank you!",
+      "prompt": "I rent an apartment in Bangkok. My landlady is an older Thai woman. I'm female.\nTranslate the message below into Thai for LINE. Polite and respectful to an older person, but not stiff.\nAfter the Thai, add an English back-translation, and tell me which words you weren't sure about or could be translated differently.\n---\nHi, this is room 305. My air-con hasn't been cooling for two days and it's dripping water. Could you please send a technician? I'm home every day after 6 pm. Thank you!",
+      "output": "สวัสดีค่ะคุณป้า หนูห้อง 305 นะคะ\nแอร์ในห้องไม่เย็นมา 2 วันแล้วค่ะ แล้วก็มีน้ำหยดด้วย\nรบกวนคุณป้าช่วยเรียกช่างมาดูให้หน่อยได้ไหมคะ\nหนูอยู่ห้องทุกวันหลัง 6 โมงเย็นค่ะ ขอบคุณมากค่ะ 🙏\n\nBack-translation: Hello auntie, I'm in room 305. The air-con in my room hasn't been cold for 2 days, and it's dripping too. Could you please call a technician to take a look? I'm in my room every day after 6 pm. Thank you very much!\n\nWorth checking:\n- I added คุณป้า (“auntie”), a respectful way to address an older woman. If she isn't much older, use คุณ + her name instead\n- หนู is a friendly way for a younger person to refer to herself when talking to an elder. For something more formal, use ดิฉัน",
+      "note": "Purpose, reader, tone and your gender are all there, plus a back-translation and a list of uncertain words. Even without reading Thai, you know what the message says and what you might adjust."
+    },
+    {
+      "type": "quiz",
+      "question": "You're renting a place in Thailand and the lease is in Thai. What's the safest approach?",
+      "options": [
+        "Have the AI translate it, and sign once you understand it",
+        "Use the AI to understand the gist, then have someone who knows Thai and contracts check the key terms before you sign",
+        "Skip the translation — the landlord seems nice"
+      ],
+      "answer": 1,
+      "explain": "The AI helps you understand quickly, but it can get key terms wrong. For anything legal or involving money, have someone reliable check it before you sign."
+    },
+    {
+      "type": "explain",
+      "body": "Tips for checking a translation:\n- **Ask the AI to translate it back** and see if the meaning has changed\n- **Names, places, numbers, dates and prices**: check them yourself, every time\n- Ask follow-up questions, like “What else could ... mean in this sentence?”\n\nFor **important documents** — contracts, test results or prescriptions, visa papers, government forms — the AI can help you understand them, but **a person must check**. Some offices require a certified translation, so ask them first which kind they accept."
+    },
+    {
+      "type": "practice",
+      "task": "Your child goes to primary school in Thailand. You want to tell the Thai homeroom teacher on LINE that your child will be away next Monday to Wednesday for a family wedding overseas, and will catch up on homework at home. You've already written the message in English.\n\nWrite the **instruction part** of a prompt asking the AI to translate it (no need to type the message — just say it will be pasted below).",
+      "rubric": [
+        "Names the source and target languages (English into Thai)",
+        "Says what it's for and who reads it (a LINE message to the child's Thai teacher)",
+        "Sets the tone or politeness (e.g. respectful to a teacher), or says whether you're male or female for ครับ/ค่ะ",
+        "Asks the AI to flag uncertain words or add a back-translation to check the meaning",
+        "Says where the original text is (e.g. pasted below a --- line)"
+      ],
+      "maxChars": 600,
+      "placeholder": "Translate the message below from ... into ... It's for ... I'm male/female. Tone: ... Afterwards, please ...\n---\n(original pasted here)"
+    }
+  ]
+}
