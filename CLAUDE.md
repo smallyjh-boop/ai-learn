@@ -37,6 +37,12 @@ RevenueCat 回调、LINE/Google token 校验、网站和 App 的学习地图与�
 7. 每日学习提醒推送（expo-notifications）、成就徽章、提示词收藏库
 8. AI 用量日志与告警（记录每次调用 token 数）、练习内容审核
 
+## 背景资料
+- 可行性报告与实现方案（含课程体系 6 阶段约 60 课、功能清单、成本、排期）：
+  https://claude.ai/artifact/KYqEB2f21L7ZYTYa8ogFYs
+- 开发节奏：先网站在 NAS 上公测、验证付费意愿，达标后再上架 iOS / Android
+- 登录、多语言、三端订阅、NAS 部署的做法与用户的另一个项目 lucky（算命平台）相同，可以参考或抽成公共模块
+
 ## 约定
 - 新课程放 `packages/content/courses/<locale>/lessons/s<阶段>-<两位序号>.json`
 - 新界面文字三种语言都要加到 `packages/shared/src/ui-text.ts`（TS 会检查缺漏）
