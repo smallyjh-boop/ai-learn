@@ -70,8 +70,6 @@ export const Stage = z.object({
   locale: z.enum(LOCALES),
   title: z.string(),
   summary: z.string(),
-  /** 免费阶段不需要订阅 */
-  free: z.boolean(),
 });
 
 export type LessonStep = z.infer<typeof LessonStep>;

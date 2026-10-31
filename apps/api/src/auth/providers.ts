@@ -22,14 +22,35 @@ export async function verifyLine(idToken: string, channelId: string): Promise<Ve
   return { provider: "line", providerId: p.sub, email: p.email ?? null, name: p.name ?? null };
 }
 
+/**
+ * LINE Login 网页版（OAuth 授权码流程）：网站跳转到 LINE 授权页，回调拿到 code，
+ * 由后端用 Channel Secret 换取 id_token，再按上面的方式校验。
+ * https://developers.line.biz/en/reference/line-login/#issue-access-token
+ */
+export async function exchangeLineCode(code: string, redirectUri: string, channelId: string, channelSecret: string): Promise<VerifiedIdentity> {
+  if (!channelId || !channelSecret) throw new Error("LINE_CHANNEL_ID / LINE_CHANNEL_SECRET 未配置");
+  const res = await fetch("https://api.line.me/oauth2/v2.1/token", {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "authorization_code", code, redirect_uri: redirectUri, client_id: channelId, client_secret: channelSecret,
+    }),
+  });
+  if (!res.ok) throw new Error("LINE 授权码无效或已过期");
+  const { id_token } = (await res.json()) as { id_token?: string };
+  if (!id_token) throw new Error("LINE 没有返回 id_token（请在 scope 里包含 openid）");
+  return verifyLine(id_token, channelId);
+}
+
 /** Google：用 tokeninfo 校验（流量大后可改为本地 JWKS 校验） */
 export async function verifyGoogle(idToken: string, clientIds: string[]): Promise<VerifiedIdentity> {
   if (!clientIds.length) throw new Error("GOOGLE_CLIENT_ID 未配置");
   const res = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`);
   if (!res.ok) throw new Error("Google token 无效");
-  const p = (await res.json()) as { sub: string; aud: string; email?: string; name?: string };
+  const p = (await res.json()) as { sub: string; aud: string; email?: string; email_verified?: string | boolean; name?: string };
   if (!clientIds.includes(p.aud)) throw new Error("Google token 的 aud 不匹配");
-  return { provider: "google", providerId: p.sub, email: p.email ?? null, name: p.name ?? null };
+  const verified = p.email_verified === true || p.email_verified === "true";
+  return { provider: "google", providerId: p.sub, email: verified ? p.email ?? null : null, name: p.name ?? null };
 }
 
 /** Apple：需用 Apple 公钥 (JWKS) 校验 identityToken —— TODO 上架 iOS 前实现 */

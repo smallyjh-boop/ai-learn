@@ -48,10 +48,18 @@ export class AnthropicProvider implements AiProvider {
   }
 }
 
+/** 粗估 token 数（约 4 个字符一个 token），只给 mock 用 */
+const estimateTokens = (s: string) => Math.ceil(s.length / 4);
+
 /** 本地开发用：不花钱，返回固定内容。点评按提示词长度粗略给分，方便测试界面。 */
 export class MockProvider implements AiProvider {
   name = "mock";
-  async complete({ system, user }: CompleteInput) {
+  async complete(input: CompleteInput) {
+    const r = await this.reply(input);
+    return { ...r, inputTokens: estimateTokens(input.system + input.user), outputTokens: estimateTokens(r.text) };
+  }
+
+  private async reply({ system, user }: CompleteInput) {
     if (system.includes("GRADER")) {
       const len = user.length;
       const score = Math.min(95, 40 + Math.floor(len / 6));
@@ -61,11 +69,9 @@ export class MockProvider implements AiProvider {
           good: ["(mock) The request is clear"],
           improve: score < 80 ? ["(mock) Add who will read it and the tone you want"] : [],
         }),
-        inputTokens: 0,
-        outputTokens: 0,
       };
     }
-    return { text: `(mock AI answer)\n\n${user.slice(0, 200)}`, inputTokens: 0, outputTokens: 0 };
+    return { text: `(mock AI answer)\n\n${user.slice(0, 200)}` };
   }
 }
 

@@ -29,6 +29,13 @@ function graderSystem(locale: Locale) {
 
 export const PASS_SCORE = 60;
 
+export interface PracticeUsage {
+  kind: "practice" | "grade";
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+}
+
 export function parseFeedback(raw: string): PracticeFeedback {
   const match = raw.match(/\{[\s\S]*\}/);
   try {
@@ -45,7 +52,7 @@ export function parseFeedback(raw: string): PracticeFeedback {
 export async function runPractice(
   ai: AiProvider,
   args: { task: string; rubric: string[]; prompt: string; locale: Locale },
-): Promise<{ output: string; feedback: PracticeFeedback }> {
+): Promise<{ output: string; feedback: PracticeFeedback; usage: PracticeUsage[] }> {
   const answer = await ai.complete({
     system: practiceSystem(args.task, args.locale),
     user: args.prompt,
@@ -64,5 +71,12 @@ export async function runPractice(
     maxTokens: 400,
   });
 
-  return { output: answer.text, feedback: parseFeedback(grading.text) };
+  return {
+    output: answer.text,
+    feedback: parseFeedback(grading.text),
+    usage: [
+      { kind: "practice", model: config.ai.practiceModel, inputTokens: answer.inputTokens, outputTokens: answer.outputTokens },
+      { kind: "grade", model: config.ai.graderModel, inputTokens: grading.inputTokens, outputTokens: grading.outputTokens },
+    ],
+  };
 }
