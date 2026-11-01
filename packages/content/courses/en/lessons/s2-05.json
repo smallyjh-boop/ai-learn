@@ -1,0 +1,51 @@
+{
+  "id": "s2-05",
+  "locale": "en",
+  "stage": 2,
+  "order": 5,
+  "title": "Plan a trip with AI",
+  "summary": "Give the AI your trip details and get a day-by-day plan",
+  "minutes": 8,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Want to travel but don't know where to start? AI can plan it with you, but only if you give it the details, like you would a friend helping you plan.\n\nWhat to tell it:\n- **Where and how long**: e.g. Chiang Mai, 3 days 2 nights\n- **How many people, and who**: any elderly parents, small kids, or anyone who can't walk far?\n- **Budget**: roughly how many baht, and whether that includes travel\n- **Getting around**: your own car, a rental, bus, train or Grab\n- **What you enjoy**: nature, beaches, temples, cafés, markets, food\n\nThen say what shape you want, e.g. **a day-by-day plan split into morning, afternoon and evening**."
+    },
+    {
+      "type": "example",
+      "bad": "Plan a trip to Chiang Mai",
+      "prompt": "Plan a 3-day, 2-night trip to Chiang Mai for 4 people: me, my husband, our 7-year-old daughter and my 68-year-old mother, who can't walk far.\nTotal budget about 15,000 baht, not counting flights. We'll rent a car at the airport.\nWe like nature, cool weather and northern Thai food. No shopping malls.\nGive a day-by-day plan with morning, afternoon and evening. Don't pack it too full; leave time to rest in the afternoon.",
+      "output": "Day 1: Arrive and take it easy\n- Morning: pick up the car, have khao soi in the old city\n- Afternoon: check in and rest, so your mother and daughter don't get tired\n- Evening: stroll around Tha Phae Gate, try northern dishes like gaeng hung lay and nam prik num\n\nDay 2: Doi Inthanon\n- Morning: leave early, about a 2-hour drive\n- Afternoon: viewpoints close to the car parks, no long walks, stop at a roadside waterfall\n- Evening: drive back, dinner near the hotel, rest\n\nDay 3: Doi Suthep, then home\n- Morning: visit Wat Phra That Doi Suthep, take the tram instead of the stairs\n- Afternoon: buy souvenirs like sai ua sausage and pork crackling, return the car, head to the airport\n\nRough budget: 2 nights' stay, car rental, fuel, food and entry fees should fit within 15,000 baht\nNote: please check opening hours and entry fees with official sources before you go",
+      "note": "Because you said your mother can't walk far, the AI chose easy stops and left rest time. The more you tell it, the better the plan fits your family."
+    },
+    {
+      "type": "explain",
+      "body": "Got a first plan? Don't use it straight away. **Follow up to adjust it**, for example:\n- \"Day 2 is too much driving for Mom. Swap it for somewhere near town.\"\n- \"What's a backup plan if it rains that day?\"\n- \"Break down the rough cost for each day.\"\n- \"We're going during Songkran and it'll be crowded. What should change?\"\n\n**Always check these yourself**, because the AI may use old information or guess wrong:\n- Opening hours and closing days\n- Ticket, hotel and transport prices\n- Bus, train and flight times\n\nCheck official websites or pages, a maps app, or call the place directly."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI says: \"This floating market is open every day from 7 am to 5 pm.\" What should you do?",
+      "options": [
+        "Trust it. The AI knows everything",
+        "Check the official page or a maps app before you go",
+        "Skip the place, since you're not sure"
+      ],
+      "answer": 1,
+      "explain": "Opening hours change, and the AI may have old information. A few minutes of checking saves a wasted trip."
+    },
+    {
+      "type": "practice",
+      "task": "For a long holiday such as Songkran, you want to take your family to Hua Hin (or anywhere you like).\n\nWrite a prompt asking the AI for a day-by-day plan. Include as many trip details as you can.",
+      "rubric": [
+        "States the destination, number of days and number of people",
+        "Gives a budget as a number (baht) and how you'll get around",
+        "Says who is going or any special needs (e.g. elderly, small kids, can't walk far)",
+        "Mentions at least 1 thing you like or don't like",
+        "Sets the answer format (e.g. day by day, morning/afternoon/evening, or cost per day)"
+      ],
+      "maxChars": 700,
+      "placeholder": "Plan a ...-day trip to ... for ... people (including ...). Budget about ... baht, getting around by ... We like ... Please give ..."
+    }
+  ]
+}

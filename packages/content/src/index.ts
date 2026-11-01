@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Lesson, Stage, LOCALES, DEFAULT_LOCALE, type Locale } from "@ai-learn/shared";
+import { Lesson, Stage, LOCALES, DEFAULT_LOCALE, isFreeStage, type CourseMapResponse, type Locale } from "@ai-learn/shared";
 
 /**
  * 课程内容加载器（仅在服务端/构建时使用）
@@ -65,4 +65,27 @@ export function listLessons(cat: Catalog, locale: Locale): Lesson[] {
   return ids
     .map((id) => getLesson(cat, locale, id)!)
     .sort((a, b) => a.stage - b.stage || a.order - b.order);
+}
+
+/**
+ * 课程地图（API 和网站服务端渲染共用）。
+ * pro / done 不传时按未登录用户计算：付费阶段上锁、没有完成记录。
+ */
+export function courseMap(
+  cat: Catalog,
+  locale: Locale,
+  opts: { pro?: boolean; done?: { has(id: string): boolean } } = {},
+): CourseMapResponse {
+  const lessons = listLessons(cat, locale);
+  const stages = getStages(cat, locale).map((s) => {
+    const free = isFreeStage(s.stage);
+    return {
+      ...s,
+      free,
+      lessons: lessons
+        .filter((l) => l.stage === s.stage)
+        .map(({ steps: _steps, ...meta }) => ({ ...meta, locked: !free && !opts.pro, completed: Boolean(opts.done?.has(meta.id)) })),
+    };
+  });
+  return { stages };
 }

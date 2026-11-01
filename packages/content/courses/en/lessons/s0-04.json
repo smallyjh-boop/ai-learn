@@ -1,0 +1,51 @@
+{
+  "id": "s0-04",
+  "locale": "en",
+  "stage": 0,
+  "order": 4,
+  "title": "Not quite right? Just follow up",
+  "summary": "Keep talking in the same chat and say what to change, no need to start over",
+  "minutes": 6,
+  "xp": 10,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "AI isn't a one-question machine. It **remembers what you've said in the same chat**.\n\nIf the first answer isn't right, **don't start over**. Just tell it what to change, like telling a hairdresser \"a little shorter\".\n\nHandy follow-ups:\n- \"Make it shorter, 3 lines max\"\n- \"Use a more formal tone\"\n- \"Give me 3 more\"\n- \"Explain it more simply\"\n- \"Number 2 is good, tell me more about that one\""
+    },
+    {
+      "type": "explain",
+      "body": "**Good follow-ups say exactly what to change**\n\nIf you only type \"I don't like it\", the AI can't tell what's wrong.\n\nTry mentioning:\n- **Length**: shorter or longer, how many lines\n- **Tone**: polite, friendly or fun\n- **Number**: how many more versions you want\n\nIf you want to talk about **something completely different**, then tap \"New chat\"."
+    },
+    {
+      "type": "example",
+      "bad": "Don't like it, again",
+      "prompt": "That post is fine, but it's too long. Cut it to 2 lines, make it friendly like chatting with regular customers, and add 1-2 emojis.",
+      "output": "Second iced coffee half price, this Sunday only ☕\nCome say hi, same spot next to the 7-Eleven at the soi entrance 😊",
+      "note": "Earlier, the AI wrote a long, formal promo post for the coffee shop. Following up in the same chat fixed it, with no need to explain the shop again."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI wrote a LINE message to a customer for you, but it sounds too formal. What should you do?",
+      "options": [
+        "Close the app and write it all yourself",
+        "Tap New chat and type everything again",
+        "In the same chat, type: \"Make it friendlier, but still polite\"",
+        "Type \"Bad\""
+      ],
+      "answer": 2,
+      "explain": "Keep going in the same chat and say clearly what to change. The AI already remembers the rest."
+    },
+    {
+      "type": "practice",
+      "task": "You asked the AI for a birthday message for your mum, but it wrote 10 lines and sounds too formal. Write one follow-up message to get it just right.",
+      "rubric": [
+        "Says clearly what to change (shorter, or less formal)",
+        "Gives the wanted length as a number, e.g. 3 lines",
+        "Says the tone wanted, e.g. warm or friendly",
+        "Builds on the previous answer instead of re-explaining everything"
+      ],
+      "maxChars": 400,
+      "placeholder": "Type your follow-up here…"
+    }
+  ]
+}

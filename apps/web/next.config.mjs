@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 共享包是 TS 源码，需要 Next 来编译
-  transpilePackages: ["@ai-learn/shared"],
+  transpilePackages: ["@ai-learn/shared", "@ai-learn/content"],
   // Docker 部署（NAS）用
   output: "standalone",
 };

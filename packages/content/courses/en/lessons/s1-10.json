@@ -1,0 +1,52 @@
+{
+  "id": "s1-10",
+  "locale": "en",
+  "stage": 1,
+  "order": 10,
+  "title": "Stage wrap-up: the complete prompt",
+  "summary": "Put every technique together for a real task for your shop",
+  "minutes": 12,
+  "xp": 30,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Congratulations — you've almost finished Stage 1! 🎉 Let's review with a **good prompt checklist**:\n\n1. **Context**: who you are, what's going on, what result you want\n2. **Role**: who the AI should act as, like a marketer or a teacher\n3. **Example**: show the AI something you like\n4. **Format**: a list? How many points? How long?\n5. **Tone**: polite, friendly, playful\n6. **Limits**: what to avoid, budget, must-have conditions\n\nSmall tasks don't need all six, but **the bigger and more important the task, the more you include, the better**."
+    },
+    {
+      "type": "example",
+      "bad": "Make a marketing plan for my shop",
+      "prompt": "You're a marketer who helps small shops with Facebook.\nI run a homemade bakery in Chiang Mai. Most customers are office workers and students nearby. Next week I want people to discover our new pandan cake.\nPlan 7 days of posts, Monday to Sunday. For each day give: a theme, a one-line post idea and the best time to post.\nTone: friendly and warm, like this: “Fresh custard bread just out of the oven — the whole street smells amazing 🍞 Drop by!”\nLimits: no ad budget; only one promotion: buy 3 get 1 free on Saturday and Sunday; don't say “best in Chiang Mai”.",
+      "output": "Mon — Launch: “It's here! Our fragrant new pandan cake 🌿” (7:30)\nTue — Behind the scenes: a short clip of squeezing fresh pandan in the morning (12:00)\nWed — Chat: “Any pandan fans out there? Raise your hand 🙋” (12:00)\nThu — Customer love: a regular with their first slice (17:30)\nFri — Heads-up: “Buy 3 get 1 free starts tomorrow!” (17:30)\nSat — Deal day: a full display case, come on in (9:00)\nSun — Thank you: customer photos from the week, last day of the deal (9:00)",
+      "note": "This prompt uses all six: role (marketer), context (shop, customers, goal), format (7 days, 3 things per day), tone with an example, and limits (no budget, the deal, a banned phrase)."
+    },
+    {
+      "type": "quiz",
+      "question": "Which checklist item is this prompt still missing?\n“You're a copywriter. I run a small nail salon in Chiang Mai and my customers are university students. Write 3 Facebook captions, max 2 lines each, in a cute, cheerful tone.”",
+      "options": [
+        "Role",
+        "Context",
+        "Limits, like including the promo price or not overclaiming",
+        "Format"
+      ],
+      "answer": 2,
+      "explain": "It has a role (copywriter), context (nail salon, students), format (3 captions, max 2 lines) and tone — but no limits or must-have conditions."
+    },
+    {
+      "type": "explain",
+      "body": "Once you've sent a great prompt, remember what to do with the answer:\n- **Follow up** and say exactly what to change\n- **Break big tasks into steps** and go one at a time\n- **Always check** key numbers and facts yourself\n- **Save prompts that work as templates** for next time\n\nReady? Let's do a real task 💪"
+    },
+    {
+      "type": "practice",
+      "task": "Your shop (or an imaginary one, like a som tam stall or an online clothing shop) needs a **one-week Facebook promotion plan**.\n\nWrite one prompt that uses as much of the checklist as you can: context, role, example, format, tone, limits.",
+      "rubric": [
+        "Context: says what the shop is, where it is or who the customers are, and this week's goal",
+        "Role: tells the AI who to act as (e.g. marketer, Facebook expert)",
+        "Format: says how many days the plan covers and what each day should include",
+        "Tone or example: describes the tone wanted or gives a sample post they like",
+        "Limits: gives at least 1 condition (e.g. budget, current promotion, things not to say)"
+      ],
+      "maxChars": 900,
+      "placeholder": "e.g. You're a marketer... I run a... Plan 7 days of posts..."
+    }
+  ]
+}

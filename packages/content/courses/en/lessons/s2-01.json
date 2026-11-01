@@ -1,0 +1,54 @@
+{
+  "id": "s2-01",
+  "locale": "en",
+  "stage": 2,
+  "order": 1,
+  "title": "Summarize long texts",
+  "summary": "Notices, articles, endless group chats — let the AI keep only what you need",
+  "minutes": 8,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "A two-page school notice, 200 messages in the work group chat, a long health article — no time to read it all? Let the AI summarize it 📄\n\nBut if you just type “summarize this”, the AI covers everything a little, and the part you actually care about may get lost.\n\nTell the AI 4 things:\n1. **What this is**: a school notice, a work group chat\n2. **Who the summary is for**: you, your parents, your boss\n3. **How long**: e.g. 5 points max, 3 lines max\n4. **What to focus on**: e.g. dates, money to pay, things I need to do\n\nWrite your instructions first, then **paste the original text below**, separated by a line of ---, so the AI knows which part is the instruction and which part is the content."
+    },
+    {
+      "type": "example",
+      "bad": "Summarize this\n[two-page school notice pasted here]",
+      "prompt": "Below is a notice from my child's school (Grade 3). It's in Thai. I work full-time and don't have time to read it closely.\nSummarize it in English, 5 points max, in plain words.\nFocus on: key dates, money to pay, and what my child needs to bring.\nIf the notice doesn't mention something, write “not stated” — don't guess.\n---\n[notice pasted here]",
+      "output": "School notice — key points (Grade 3)\n- Zoo field trip this Friday (the 14th). Leaves 7:30 am, back at school around 3 pm\n- Cost: 350 baht per child, pay the homeroom teacher by Monday the 10th\n- Hand in the signed parent consent form with the money\n- Bring: PE uniform, hat, water bottle, any regular medicine\n- Lunch: not stated — worth asking the teacher",
+      "note": "All 4 things are there, plus “don't guess”, so the AI says clearly what the notice leaves out. Bonus: the AI can summarize a Thai original straight into English."
+    },
+    {
+      "type": "example",
+      "bad": "What's this chat about?\n[group chat pasted here]",
+      "prompt": "I was off for two days and came back to almost 200 messages in my team's LINE group about next month's client seminar.\nSummarize in 2 parts:\n1. What has been decided (4 points max)\n2. Tasks for “Nok” (that's me), with deadlines\nSkip the small talk.\n---\n[chat pasted here]",
+      "output": "1. Decided\n- Venue: a hotel in the Silom area, Thursday the 20th\n- About 60 clients invited\n- Food budget: 500 baht per person max\n- Ek will be the MC\n\n2. Nok's tasks\n- Prepare the client list and send invitations — by this Friday\n- Call the hotel to confirm numbers — by the 15th",
+      "note": "Asking for 2 parts and saying who you are in the chat lets the AI pull out your tasks, so you don't have to scroll through 200 messages."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI's summary says “payment due by the 10th”. What should you do next?",
+      "options": [
+        "Trust it — the AI reads more carefully than people do",
+        "Check the date and amount against the original before acting on it",
+        "Ask for 3 more summaries and go with the most common answer"
+      ],
+      "answer": 1,
+      "explain": "AI summaries can be wrong or miss things, especially numbers and dates. For anything involving money or deadlines, always check the original yourself (just like in “Check the AI's answers”)."
+    },
+    {
+      "type": "practice",
+      "task": "Your condo's management office posted a two-page notice in the LINE group about water system repairs and the lift being closed on some days. You want to send a short summary to your mum, who lives with you.\n\nWrite the **instruction part** of a prompt asking the AI to summarize it (no need to type the notice — just say the original will be pasted below).",
+      "rubric": [
+        "Says what the original text is (a condo management notice about water/lift repairs)",
+        "Says who the summary is for (mum or an older reader), or asks for plain, simple language",
+        "Sets a clear length or number of points (e.g. 5 points max)",
+        "Names what to focus on, e.g. dates and times with no water or no lift, or what to prepare",
+        "Says where the original text is (e.g. pasted below a --- line)"
+      ],
+      "maxChars": 600,
+      "placeholder": "Below is a notice from... Summarize it for... in ... points max, focusing on...\n---\n(original pasted here)"
+    }
+  ]
+}

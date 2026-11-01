@@ -1,0 +1,46 @@
+{
+  "id": "s1-09",
+  "locale": "en",
+  "stage": 1,
+  "order": 9,
+  "title": "Make your own prompt templates",
+  "summary": "Save prompts that work and fill in the blanks next time",
+  "minutes": 7,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "When a prompt works well, **don't throw it away**. Save it to reuse — in LINE Keep or your phone's notes app.\n\nHow to make a template:\n1. Take a prompt that gave you a good result\n2. Find the parts that **change every time** and put them in [square brackets], like [product name] or [price]\n3. Give it a name you'll remember, like “Sales post” or “Reply to review”\n\nNext time, just copy it, fill in the brackets and send.\n\nImportant: **the parts that stay the same** — length, tone, format — are what make the prompt good. Don't cut them."
+    },
+    {
+      "type": "example",
+      "bad": "Write a post selling [product]",
+      "prompt": "Template “Sales post”:\nI run a [type of shop] in [area]. Write a Facebook post selling [product name] for [price] baht. What makes it special: [selling point]. Max 4 lines, casual tone, 2–3 emojis, and end by inviting people to message me on LINE.\n\nThis time:\n[type of shop] = Thai dessert shop\n[area] = Lat Phrao\n[product name] = mango sticky rice\n[price] = 60\n[selling point] = sweet, juicy Nam Dok Mai mangoes, sticky rice made fresh every morning",
+      "output": "Mango sticky rice is here 🥭\nSweet, juicy Nam Dok Mai mangoes + sticky rice made fresh every morning\nJust 60 baht a box — ordering open around Lat Phrao\nMessage us on LINE to reserve before it sells out 💬✨",
+      "note": "The weak template only keeps a blank and loses everything that made the prompt good (length, tone, ending). The good one keeps it all and only swaps what's in the brackets."
+    },
+    {
+      "type": "quiz",
+      "question": "To turn this prompt into a template, which part belongs in brackets?\n“Write a LINE message telling Mr. Somchai his parcel arrives on Friday. Polite tone, max 3 lines.”",
+      "options": [
+        "“Polite tone”",
+        "The customer's name and the delivery day",
+        "“Max 3 lines”"
+      ],
+      "answer": 1,
+      "explain": "The name and day change every time, so they become [customer name] and [delivery day]. The tone and length are what you want every time, so they stay."
+    },
+    {
+      "type": "practice",
+      "task": "Create a prompt template you'd use often — for example, replying to customer reviews, writing a leave request or summarizing a meeting.\n\nUse [square brackets] for the parts that change each time.",
+      "rubric": [
+        "Has at least 2 [square bracket] blanks",
+        "Bracket names make it clear what to fill in (e.g. [customer name], not [xxx])",
+        "The fixed parts include good-prompt elements such as context, length or format, and tone",
+        "Truly reusable: no one-time details hard-coded where a bracket should be"
+      ],
+      "maxChars": 700,
+      "placeholder": "e.g. Reply to a review from [customer name] who wrote: [review text]..."
+    }
+  ]
+}

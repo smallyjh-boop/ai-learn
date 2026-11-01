@@ -1,0 +1,61 @@
+{
+  "id": "s2-09",
+  "locale": "en",
+  "stage": 2,
+  "order": 9,
+  "title": "Ask AI about a photo",
+  "summary": "Snap a menu, sign, manual or label and ask AI about it",
+  "minutes": 8,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Many AI apps — like ChatGPT, Gemini and Claude — **accept photos**. Tap the camera 📷 or + button next to the text box, then take a picture or pick one from your phone.\n\nWhat it's good for:\n- **Translating menus, signs and labels** you can't read\n- **Asking how to use something** from a manual or an appliance's buttons\n- **Asking what something is**: a plant, an insect, a medicine box\n\n**A photo on its own isn't enough** — add a question. Same formula as before: say what the photo shows, what you want to know and what kind of answer you want.\n\n**Take a clear photo**: good light, all the text in frame. If it's blurry, the AI may misread it."
+    },
+    {
+      "type": "example",
+      "bad": "[photo] What's this?",
+      "prompt": "[Photo: the control panel of the washing machine in my rented room — all buttons are in Thai]\nThis is my landlord's washing machine. Tell me what each button means, left to right, as a short list.\nI want to wash bed sheets — which buttons do I press, and in what order?\nIf any button is hard to read, just say so. Don't guess.",
+      "output": "Buttons (left to right)\n1. ซักปกติ — Normal wash\n2. ซักด่วน — Quick wash\n3. ผ้านวม — Duvet / bulky items\n4. ผ้าบอบบาง — Delicates\n5. ปั่นแห้ง — Spin\n6. ตั้งเวลา — Timer / delay start\n\nWashing bed sheets\n1. Press the power button\n2. Choose ซักปกติ (Normal wash, button 1)\n3. Press เริ่ม/หยุด (Start/Pause) at the bottom right\n\nNote: the small button on the far right is blurry and I can't read it. Send a closer photo if you need it.",
+      "note": "Saying what the photo is, asking clearly, setting a format and asking it to admit what it can't read gives an answer you can trust."
+    },
+    {
+      "type": "explain",
+      "body": "**Before you hit send, check 2 things**\n\n**1. Is there personal info in the photo?** Crop it out or cover it:\n- ID cards, ATM cards, credit cards\n- Parcel labels with names, phone numbers and addresses\n- Other people's faces, especially children and strangers\n- Screens showing OTP codes or account numbers\n\nTip: use **Edit / Crop** in your phone's photo app to cut that part out first.\n\n**2. Does this need an expert?**\n- **Medicine**: AI can read the label and tell you what it is, but **whether you can take it, how much, and with which other medicines is a question for a pharmacist or doctor**\n- **Wild mushrooms or plants**: never eat them just because AI says they're safe — it can be wrong"
+    },
+    {
+      "type": "quiz",
+      "question": "Your mum got a box of painkillers from a neighbour. The label is in English, and she takes blood pressure medicine. What should you do?",
+      "options": [
+        "Ask AI with a photo, and if it says it's fine, let her take it",
+        "Ask AI with a photo what it is, then take the box and her blood pressure medicine to a pharmacist",
+        "Just take it — the neighbour said it works well"
+      ],
+      "answer": 1,
+      "explain": "AI can read the label, but it doesn't know your mum's health. Some medicines are dangerous together, so a pharmacist or doctor should check."
+    },
+    {
+      "type": "quiz",
+      "question": "Which photo should you crop or partly cover before sending it to AI?",
+      "options": [
+        "A noodle stall menu at the night market",
+        "A parcel that arrived broken, with the label showing a name, phone number and address",
+        "A plant by your door with yellowing leaves"
+      ],
+      "answer": 1,
+      "explain": "Parcel labels contain personal info — crop it out. To ask about the damage, the AI only needs to see the box and the item."
+    },
+    {
+      "type": "practice",
+      "task": "A relative gave your mum (65) an air fryer. She's never used one. You took 2 photos:\n- **The control panel**: text in Chinese, with a temperature dial and a timer dial\n- **One page of the manual**: in Chinese\n\nWrite the message you'll send with the photos, asking the AI to explain how to use it so your mum can reheat fried chicken on her own. (The AI that reviews your answer only sees your text, not the photos.)",
+      "rubric": [
+        "Tells the AI what the photos show (air fryer control panel and a manual page, in Chinese)",
+        "Gives context: who will use it (mum, older, never used one) and the goal (reheat fried chicken)",
+        "Sets an answer format, e.g. numbered steps in simple words with temperature and time",
+        "Asks for safety warnings from the manual, or to say clearly if any part of the photo is unreadable"
+      ],
+      "maxChars": 600,
+      "placeholder": "[photo] This is... Please explain..."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "s2-02",
+  "locale": "en",
+  "stage": 2,
+  "order": 2,
+  "title": "Write messages and emails",
+  "summary": "Sick days, apologies, payment reminders, saying no — let the AI draft, then make it yours",
+  "minutes": 9,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Some messages are just awkward to write: asking for a day off, apologizing to a customer, chasing a payment, saying no. Let the AI write the first draft ✉️\n\nTell the AI:\n- **Who it's to, and how you know them**: your boss, your child's teacher, a regular customer, a friend\n- **Where it's sent**: a short LINE message, or an email with a subject line\n- **What it's about, with the facts**: dates, amounts, reasons\n- **How formal**: formal, or friendly and relaxed\n\nSay **how you address them** too: “Hi Joy” or “Dear Ms. Somsri”, first name or title. If the message is in Thai, tell the AI **whether you're male or female**, so it ends sentences with ครับ or ค่ะ correctly.\n\nMost important: **the AI drafts, you edit**. Always read it before sending, check names, dates and numbers, and make it sound like you."
+    },
+    {
+      "type": "example",
+      "bad": "Write a sick day message",
+      "prompt": "I work in an office in Bangkok and I have a fever today, so I need 1 sick day.\nWrite a LINE message to my manager, Joy. We're on first-name terms — polite but not stiff.\nMention that I've handed my urgent tasks to my colleague May, and I'll send a doctor's note tomorrow.\n4 lines max.",
+      "output": "Hi Joy, I've woken up with a fever, so I'll need to take a sick day today 🙏\nMay is covering my urgent tasks.\nI'll send you a doctor's note tomorrow.\nThanks for understanding!",
+      "note": "Name, level of formality and the key facts are all there, so this is almost ready to send. If you wouldn't normally say “Thanks for understanding”, change it to your own words first."
+    },
+    {
+      "type": "example",
+      "bad": "Ask a customer to pay",
+      "prompt": "I run a small clothing shop on Facebook. A regular customer, Ann, bought 1,250 baht worth of clothes. She's received them but hasn't paid, and it's now 5 days past the due date.\nWrite a LINE payment reminder. Friendly and polite.\nDon't accuse her or make her feel embarrassed, but be clear about the amount, and leave room for my bank account details.\n5 lines max.",
+      "output": "Hi Ann 😊\nHope the clothes arrived safely and you like them!\nJust a quick reminder that the total is 1,250 baht.\nYou can transfer to the account below — please send me the slip when it's done.\nThanks so much for always supporting my shop 🙏",
+      "note": "Giving two goals at once — “get paid” and “keep the customer” — makes the AI write gently but still state the amount. Double-check the amount and account number yourself before sending."
+    },
+    {
+      "type": "quiz",
+      "question": "You want the AI to write an email apologizing to a customer who got the wrong colour. Which detail helps the AI choose the right tone and form of address most?",
+      "options": [
+        "Make it sound as good as possible",
+        "I'm the shop owner, the customer is Mr. Wichai, he's older than me, use formal and polite language, include a subject line",
+        "Make it long so it sounds sincere"
+      ],
+      "answer": 1,
+      "explain": "Option 2 gives your role, the reader's name and age, how formal to be and that it's an email, so the AI can pick the right words. Longer doesn't always mean more sincere."
+    },
+    {
+      "type": "practice",
+      "task": "You sell things through a Facebook page. A customer messages you on LINE asking for 30% off. You can't do that, but you can offer free shipping.\n\nWrite a prompt asking the AI to draft a **polite “no”** that keeps the customer happy.",
+      "rubric": [
+        "Says who it's to and where it's sent (the customer asking for a discount, on LINE)",
+        "Gives the key facts: no 30% discount, but free shipping is possible",
+        "Says how to address the customer (name, first name or title), or, for a Thai message, whether to use ครับ or ค่ะ",
+        "Sets the tone or level of politeness (e.g. friendly, polite, doesn't make the customer feel embarrassed)",
+        "Has at least 1 limit (e.g. a maximum number of lines, no long explanation)"
+      ],
+      "maxChars": 600,
+      "placeholder": "I sell ... on Facebook. A customer asked for ... Write a LINE message saying no politely, address them as ..., tone ..., max ... lines"
+    }
+  ]
+}

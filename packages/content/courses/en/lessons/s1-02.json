@@ -1,0 +1,53 @@
+{
+  "id": "s1-02",
+  "locale": "en",
+  "stage": 1,
+  "order": 2,
+  "title": "Give the AI a role",
+  "summary": "Start with \"You are a...\" for answers that sound more expert and fit the situation",
+  "minutes": 7,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Try starting your prompt with **\"You are a...\"**\n\nThe AI will answer like someone in that job — their know-how, their words and their tone.\n\nA good role says 2 things:\n- **Who**: a Thai chef, an English teacher, an accountant\n- **How skilled / what kind of person**: 10 years of experience, patient, explains simply\n\nThen add the 3 things from the last lesson: who you are, what you want, who it's for."
+    },
+    {
+      "type": "example",
+      "bad": "How do I make tom yum?",
+      "prompt": "You are a Thai chef with 10 years of experience who is patient and great at teaching beginners. I'm just learning to cook and want to make creamy tom yum goong for my family of 4. Give me a simple method and the mistakes beginners usually make.",
+      "output": "Creamy tom yum goong (serves 4)\n\nMethod:\n1. Boil 4 cups of water with galangal, lemongrass and kaffir lime leaves. Bruise or tear them first so they release more flavor\n2. When it boils, add mushrooms, then 500 g of prawns\n3. As soon as the prawns change color, turn off the heat before seasoning\n4. Season with fish sauce, chili paste, evaporated milk and lime juice\n\nCommon beginner mistakes:\n- Cooking the prawns too long makes them rubbery\n- Adding lime while the heat is on makes the soup bitter — add it after\n- Adding all the seasoning at once — add a little, taste, repeat",
+      "note": "With the chef role, the AI shares real kitchen tips, not just a generic recipe."
+    },
+    {
+      "type": "example",
+      "bad": "Teach me English",
+      "prompt": "You are a very patient English teacher who loves teaching adults who have never studied English. I'm 55 and run a coffee shop in Chiang Mai. I want to talk with foreign customers. Teach me 5 phrases for greeting and taking orders, with a short explanation of when to use each.",
+      "output": "Don't worry — you'll use these 5 every day:\n\n1. Hello! What would you like? — when a customer walks up\n2. Hot or iced? — to ask about the drink\n3. Small or large? — to ask about the cup size\n4. That's 60 baht, please. — when they pay\n5. Thank you! Have a nice day! — when they leave\n\nPractice one phrase a day. Take your time.",
+      "note": "The \"patient teacher\" role keeps the answer short, simple and encouraging."
+    },
+    {
+      "type": "quiz",
+      "question": "You want the AI to check whether your room rental contract has terms that are unfair to the tenant. Which role fits best?",
+      "options": [
+        "You are a novelist",
+        "You are a lawyer who has helped tenants for years and explains things in plain language",
+        "You are the smartest AI in the world"
+      ],
+      "answer": 1,
+      "explain": "A good role matches the task and says what you need (on the tenant's side, easy to understand). For important legal matters, still check with a real professional."
+    },
+    {
+      "type": "practice",
+      "task": "You run a small restaurant. A customer left a 2-star review on Google Maps saying the food took too long. Write a prompt asking the AI to draft a reply to this review. Start by giving the AI a role.",
+      "rubric": [
+        "Gives a role that fits the task using \"You are a...\" (e.g. restaurant owner, manager, customer service expert)",
+        "Describes the role's experience or traits (e.g. years of experience, patient, polite)",
+        "Describes the situation (what restaurant, what the customer complained about, how many stars)",
+        "Says what is wanted and who will read it (a review reply seen by the customer and others)"
+      ],
+      "maxChars": 600,
+      "placeholder": "You are a... I run a... Please write..."
+    }
+  ]
+}

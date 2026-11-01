@@ -1,0 +1,47 @@
+{
+  "id": "s1-06",
+  "locale": "en",
+  "stage": 1,
+  "order": 6,
+  "title": "Follow up and refine",
+  "summary": "A so-so first answer is normal — say exactly what to change",
+  "minutes": 7,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "The AI's first answer often isn't quite right. **That's normal** — no need to start over.\n\nJust reply in the same chat and say exactly what to change:\n- “The second paragraph is too long, cut it to 2 lines”\n- “Add the price: 150 baht”\n- “Make it sound friendlier”\n\nIf you only say **“Bad, rewrite it”**, the AI doesn't know what's wrong, so it just keeps guessing.\n\nTip: also say **which parts are good and should stay**."
+    },
+    {
+      "type": "example",
+      "bad": "That's bad. Rewrite it.",
+      "prompt": "First ask: Write a LINE message inviting regular customers to my café, because we opened a new branch\n(The AI wrote 3 long, formal paragraphs with no promotion)\n\nFollow-up: Good start, but change 3 things:\n1. Keep it to 4 lines max\n2. Add the deal: buy 1 get 1 free, Nov 1–3, at our Nimman branch\n3. Make it casual, like texting a friend\nThe thank-you line at the end is great, keep it",
+      "output": "Big news! Our new Nimman branch is open ☕\nTo celebrate: buy 1 get 1 free on every drink, Nov 1–3 only\nCome say hi, we'd love to see you 😊\nThanks for always supporting us 🙏",
+      "note": "A good follow-up lists what to change, what to add and what to keep, so the AI gets it right in one go."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI wrote a birthday message for your boss, but it's too long and too gushy. Which follow-up works best?",
+      "options": [
+        "Don't like it, again",
+        "Cut it to 2 lines, use a polite workplace tone, and remove the word “dear”",
+        "Try again",
+        "Make it better"
+      ],
+      "answer": 1,
+      "explain": "Option 2 names the length, the tone and the word to remove, so the AI knows exactly what to fix. The others never say what the problem is."
+    },
+    {
+      "type": "practice",
+      "task": "You asked the AI for a Facebook post announcing new opening hours for your noodle shop. Its answer had these problems:\n- Two big paragraphs, tiring to read\n- Stiff, official tone, like a government notice\n- It left out the new hours: 7:00–15:00, closed Wednesdays\n- The thank-you to customers was good\n\nWrite **one follow-up message** that tells the AI exactly what to fix.",
+      "rubric": [
+        "Gives a specific length (e.g. how many lines or sentences)",
+        "Asks to add the missing info: 7:00–15:00 and closed Wednesdays",
+        "Names the new tone wanted (e.g. friendly, warm)",
+        "Says to keep the good part (the thank-you) instead of a vague full rewrite"
+      ],
+      "maxChars": 500,
+      "placeholder": "e.g. Good start, but change 3 things: 1. ..."
+    }
+  ]
+}

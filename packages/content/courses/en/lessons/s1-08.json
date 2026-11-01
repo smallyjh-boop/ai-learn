@@ -1,0 +1,58 @@
+{
+  "id": "s1-08",
+  "locale": "en",
+  "stage": 1,
+  "order": 8,
+  "title": "Check the AI's answers",
+  "summary": "Ask for sources and doubts, then verify what matters yourself",
+  "minutes": 8,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "The AI **can be wrong while sounding completely sure**. Sometimes it makes things up, and it may not know the latest information.\n\n3 good habits:\n1. **Ask the AI what its answer is based on**, and which parts it's unsure about or may be outdated\n2. **Tell it up front**: “If you don't know, say so. Don't guess.”\n3. **Check key numbers and facts yourself** with a reliable source: official government, bank or hospital websites, or an expert\n\nAlways check: **money, tax, law, health, medicine, prices, dates**"
+    },
+    {
+      "type": "example",
+      "bad": "When is the tax deadline this year?",
+      "prompt": "I'm a salaried employee in Thailand. I want to know the deadline for filing my annual personal income tax (form PND.91).\nIn your answer, please also tell me:\n- What this is based on\n- Which parts may change every year, or you're not sure about\n- If you don't know, say so\n- Where I should check the official information",
+      "output": "Usually: paper filing is due by March 31 of the following year. Online filing is often given about 1 extra week.\n\nBased on: the deadlines Thailand's Revenue Department has used in past years.\n\nNot sure: the online extension date is announced again each year, and my information may not cover the latest year.\n\nWhere to check: the Revenue Department website rd.go.th, or the 1161 hotline.",
+      "note": "The AI says what it's unsure about and points to an official source — but you still need to check before you act."
+    },
+    {
+      "type": "quiz",
+      "question": "The AI confidently tells you how much fever medicine to give your mother. What should you do?",
+      "options": [
+        "Trust it — the AI sounded sure",
+        "Ask the AI again; if the answer is the same, it's fine",
+        "Check with a pharmacist, a doctor or the label before giving it"
+      ],
+      "answer": 2,
+      "explain": "Sounding sure doesn't mean being right, and asking again can just repeat the mistake. For medicine, always check with an expert or the label."
+    },
+    {
+      "type": "quiz",
+      "question": "Which line makes the AI less likely to make things up?",
+      "options": [
+        "Give as much detail as possible",
+        "If you don't know or aren't sure, say so — don't guess",
+        "Answer quickly"
+      ],
+      "answer": 1,
+      "explain": "When you give the AI permission to say “I don't know”, it's more willing to admit it instead of guessing just to give an answer."
+    },
+    {
+      "type": "practice",
+      "task": "You're planning a family trip to Chiang Mai over Songkran and want to ask the AI about ticket prices and opening hours for 3 attractions.\n\nWrite a prompt that gets an answer you **can verify**, without the AI guessing.",
+      "rubric": [
+        "Asks a clear question with context (Chiang Mai, Songkran, family trip)",
+        "Asks the AI to say what its information is based on",
+        "Asks the AI to flag what it's unsure about or what may have changed",
+        "Tells the AI to say it doesn't know rather than guess",
+        "Asks for official sources to check (e.g. the attractions' official websites or pages)"
+      ],
+      "maxChars": 600,
+      "placeholder": "e.g. I'm taking my family to Chiang Mai for Songkran... If you don't know, say so..."
+    }
+  ]
+}

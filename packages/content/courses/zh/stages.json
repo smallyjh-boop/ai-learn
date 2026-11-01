@@ -1,8 +1,8 @@
 [
-  { "stage": 0, "locale": "zh", "title": "认识AI", "summary": "AI是什么、能做什么，完成第一次对话", "free": true },
-  { "stage": 1, "locale": "zh", "title": "学会提问", "summary": "说清背景、给角色、给例子、指定格式", "free": true },
-  { "stage": 2, "locale": "zh", "title": "日常场景", "summary": "写消息、翻译、总结长文、做旅行计划", "free": false },
-  { "stage": 3, "locale": "zh", "title": "工作效率", "summary": "写报告、做表格、做PPT、整理会议纪要", "free": false },
-  { "stage": 4, "locale": "zh", "title": "创作与生意", "summary": "AI做图、写商品文案、做客服话术", "free": false },
-  { "stage": 5, "locale": "zh", "title": "进阶", "summary": "自己的提示词库、自动化入门、用AI写简单程序", "free": false }
+  { "stage": 0, "locale": "zh", "title": "认识AI", "summary": "AI是什么、能做什么，完成第一次对话" },
+  { "stage": 1, "locale": "zh", "title": "学会提问", "summary": "说清背景、给角色、给例子、指定格式" },
+  { "stage": 2, "locale": "zh", "title": "日常场景", "summary": "写消息、翻译、总结长文、做旅行计划" },
+  { "stage": 3, "locale": "zh", "title": "工作效率", "summary": "写报告、做表格、做PPT、整理会议纪要" },
+  { "stage": 4, "locale": "zh", "title": "创作与生意", "summary": "AI做图、写商品文案、做客服话术" },
+  { "stage": 5, "locale": "zh", "title": "进阶", "summary": "自己的提示词库、自动化入门、用AI写简单程序" }
 ]

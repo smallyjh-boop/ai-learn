@@ -1,0 +1,65 @@
+{
+  "id": "s2-08",
+  "locale": "en",
+  "stage": 2,
+  "order": 8,
+  "title": "Money and big decisions",
+  "summary": "Make a monthly budget, sort your spending and weigh up two choices",
+  "minutes": 9,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "AI can help a lot with everyday money:\n- **Monthly budget**: give it your income and main bills, and let it split the rest\n- **Sorting spending**: paste in what you've noted down and have it grouped into food, transport, bills and so on\n- **Comparing two choices**: pay for a phone upfront or in installments? Change jobs? Which room to rent?\n\n**3 money rules**\n1. **Rough numbers are enough.** Never type bank account numbers, card numbers or OTPs, and don't upload transfer slips that show your account number\n2. **AI doesn't decide for you.** Especially with investing: let it help you think, but the choice is yours\n3. **“Guaranteed profit” or “zero risk” means be careful.** No investment can promise you'll never lose\n\nAnd always **double-check any math the AI does**."
+    },
+    {
+      "type": "example",
+      "bad": "Make me a budget, I never have enough money",
+      "prompt": "I work in an office in Bangkok and take home 18,000 baht a month.\nFixed costs: rent 4,500, water and electricity about 800, phone plan 399, phone installment 1,200 (6 months left), money for my mum 2,000.\nI want to save 2,000 baht a month.\nSplit my monthly budget into categories with an amount for each, and give me 3 realistic ways to save. Keep it short.",
+      "output": "Monthly budget: 18,000 baht\n\nFixed costs: 8,899\n- Rent 4,500\n- Water and electricity 800\n- Phone plan 399\n- Phone installment 1,200\n- For Mum 2,000\n\nSavings: 2,000 (move it out on payday)\n\nDay-to-day spending: 7,101\n- Food 4,500 (about 150 a day)\n- Transport 1,200\n- Household and other 1,401\n\nWays to save\n1. Bring lunch from home 2 days a week\n2. Switch off the aircon when you go out; set it to 26° at night\n3. When the phone is paid off in 6 months, keep saving that 1,200",
+      "note": "Rough numbers plus a clear goal give a budget that fits real life — and no bank details needed."
+    },
+    {
+      "type": "example",
+      "bad": "Which room is better?",
+      "prompt": "I work near Silom and I'm choosing between two rooms to rent.\nRoom A: 5-minute walk to the BTS, 6,500 baht a month.\nRoom B: 4,000 baht, but I'd take a songthaew to the BTS first — about 60 baht more per day in fares and an extra hour and a half of travel there and back.\nCompare the pros and cons in bullet points under: monthly cost, time and convenience. Then give me 3 questions to ask myself before I choose. Don't pick for me.",
+      "output": "Monthly cost (22 working days)\n- Room A: 6,500\n- Room B: 4,000 + about 1,320 in extra fares = 5,320\n→ Room B is about 1,180 cheaper per month\n\nTime\n- Room A: you get back about 33 hours a month\n- Room B: longer, more tiring commute, especially when it rains\n\nConvenience\n- Room A: easy to get home late\n- Room B: depends on songthaews; late nights may be tricky\n\nQuestions before you decide\n1. How much does 1,180 baht a month matter to you right now?\n2. How often do you get home late?\n3. What would you do with 33 extra hours a month?",
+      "note": "Asking for a comparison by topic — and saying “don't pick for me” — gives you material to think with. Check the AI's numbers on a calculator."
+    },
+    {
+      "type": "quiz",
+      "question": "Someone in a LINE group invites you to invest: “Our AI trading bot makes 10% a month, guaranteed no losses.” What should you do?",
+      "options": [
+        "Jump in fast — lots of people in the group already have",
+        "Ask an AI how much to put in and do what it says",
+        "Be suspicious, send no money, and check with an official regulator such as Thailand's SEC"
+      ],
+      "answer": 2,
+      "explain": "No investment can guarantee profit — “guaranteed” is a red flag. AI can help you spot warning signs, but don't let it make investment decisions for you, and don't transfer money."
+    },
+    {
+      "type": "quiz",
+      "question": "You want AI to sort this month's spending. Which is safe to type in?",
+      "options": [
+        "A screenshot of your banking app showing your account number and balance",
+        "Your own notes, like “7-Eleven 85, electricity 760, chicken rice 50”",
+        "Your credit card number so the AI can pull the transactions itself"
+      ],
+      "answer": 1,
+      "explain": "The AI only needs what you spent and on what. Account and card numbers aren't needed — never type them in."
+    },
+    {
+      "type": "practice",
+      "task": "You're torn between two choices (real or made up), for example:\n- Buy a new phone on a 10-month 0% plan, or keep your old one\n- Take a new job that pays more but is far from home\n- Two rooms to rent with different prices and locations\n\nWrite a prompt asking the AI to compare the pros and cons so you can decide for yourself.",
+      "rubric": [
+        "Describes their situation, e.g. why they need to choose, rough income or budget, or key conditions",
+        "Gives details for both options, including key numbers like price, monthly payment, salary or distance",
+        "Sets an answer format, e.g. compare point by point under topics (money, time, risk) or a number of points",
+        "Keeps the decision for themselves, e.g. asks for questions to think about or says they'll decide",
+        "Includes no sensitive personal info such as account numbers, card numbers or passwords"
+      ],
+      "maxChars": 700,
+      "placeholder": "I'm choosing between... Option A: ... Option B: ... Please compare..."
+    }
+  ]
+}

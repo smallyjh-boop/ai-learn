@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
-    "build": "tsup src/server.ts --format esm --target node20 --out-dir dist --clean --no-splitting --noExternal @ai-learn/shared --noExternal @ai-learn/content",
+    "build": "tsup",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },
@@ -20,7 +20,9 @@
     "drizzle-orm": "^0.36.4",
     "fastify": "^5.1.0",
     "ioredis": "^5.4.1",
+    "jose": "^6.2.14",
     "postgres": "^3.4.5",
+    "stripe": "^23.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -1,0 +1,50 @@
+{
+  "id": "s2-04",
+  "locale": "en",
+  "stage": 2,
+  "order": 4,
+  "title": "Get the AI to explain things",
+  "summary": "Make hard topics simple, get examples, and compare two options",
+  "minutes": 9,
+  "xp": 20,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Confused by tax deductions, health insurance or 0% installment plans? Stuck choosing between two options? Just ask the AI 💡\n\nTips for answers you can actually understand:\n- **Ask for simple words**: “Explain it like I'm 10” or “no jargon”\n- **Ask for examples** from everyday life, like shopping at 7-Eleven or taking the BTS\n- **Compare two options** point by point, on the things you care about: cost, risk, convenience\n- **Say who you are**: “I'm 55 and have always used cash” helps the AI explain it for you\n\nAnd don't forget: **ask the AI to point out what it's unsure about**."
+    },
+    {
+      "type": "example",
+      "bad": "What is a credit card?",
+      "prompt": "I'm 55 and I've always paid in cash. My Thai bank wants me to get a card, but I don't understand the difference between a debit card and a credit card.\nExplain it simply, like you would to a 10-year-old, using buying something at 7-Eleven as the example.\nThen compare them on: where the money comes from, whether I could end up in debt, and fees.\nTell me what you're unsure about, or what differs between banks.",
+      "output": "Think of it like this 👇\n\nDebit card = paying from your own piggy bank\nBuy a 50-baht snack at 7-Eleven, and 50 baht leaves your account right away.\n\nCredit card = the bank pays first, you pay it back later\nBuy a 50-baht snack, the bank pays for it, and you pay the bank back when the bill comes. If you don't pay it all, you're charged interest.\n\nSide by side:\n- Where the money comes from: debit uses your money / credit uses money borrowed from the bank\n- Could you end up in debt? Debit: hardly ever / Credit: yes, if you spend more than you can pay back\n- Fees: both can have annual fees\n\n⚠️ Not sure: fees, interest rates and requirements differ between banks and can change, so ask your bank directly.",
+      "note": "Simple words, an example, a comparison on the points you care about, and flagged uncertainties: you understand it right away, and you know what to ask next."
+    },
+    {
+      "type": "quiz",
+      "question": "You ask the AI: “What documents and fees do I need to extend my visa in Thailand right now?” How should you use the answer?",
+      "options": [
+        "Follow it exactly and go apply",
+        "Use it to understand the general process, then check the latest documents and fees on the official website or with the office in charge",
+        "Ask a second AI — if they agree, it must be right"
+      ],
+      "answer": 1,
+      "explain": "Fees, documents and rules change, and the AI may be working from old information. Two AIs can be wrong in the same way, too. For things like this, always go by official sources."
+    },
+    {
+      "type": "explain",
+      "body": "Some information **changes over time**, so the AI's answer may be out of date:\n- Prices, fees, interest rates\n- Laws, benefits, government procedures and required documents\n- Opening hours, timetables, promotions\n\nFor these, use the AI to **understand the big picture**, then **check the details with official sources** — government websites, your bank branch, the hospital.\n\nFor health and medicine, the AI can help you prepare questions, but **always ask a doctor or pharmacist** before deciding."
+    },
+    {
+      "type": "practice",
+      "task": "You have 50,000 baht in savings and can't decide between a **savings account** and a **fixed deposit**. You're not sure what the difference is.\n\nWrite a prompt asking the AI to explain it simply and compare the two options.",
+      "rubric": [
+        "Gives your situation (roughly how much money, choosing between a savings account and a fixed deposit, or who you are)",
+        "Asks for a simple explanation (e.g. like I'm 10, no financial jargon) or for examples",
+        "Asks for a comparison on clear points (e.g. interest, when you can withdraw, risk) or a point-by-point format",
+        "Asks the AI to flag what it's unsure about, or what to check with the bank (e.g. current interest rates)"
+      ],
+      "maxChars": 600,
+      "placeholder": "I have ... in savings and can't decide between ... and ... Explain it simply, like ... Then compare them on ... Tell me what you're unsure about..."
+    }
+  ]
+}

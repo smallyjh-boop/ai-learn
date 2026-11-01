@@ -1,17 +1,10 @@
 import type {
-  ApiError, AuthResponse, CourseMapResponse, LessonResponse, Locale, Me, PracticeRequest, PracticeResponse,
+  ApiError, AuthConfig, AuthResponse, CourseMapResponse, LessonResponse, Locale, Me, PracticeRequest, PracticeResponse,
+  UrlResponse,
 } from "@ai-learn/shared";
+import { getToken } from "./session";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
-const TOKEN_KEY = "ailearn_token";
-
-export function getToken(): string | null {
-  if (typeof window === "undefined") return null;
-  try { return localStorage.getItem(TOKEN_KEY); } catch { return null; }
-}
-export function setToken(token: string | null) {
-  try { token ? localStorage.setItem(TOKEN_KEY, token) : localStorage.removeItem(TOKEN_KEY); } catch { /* 隐私模式 */ }
-}
 
 export class ApiFailure extends Error {
   constructor(public status: number, public body: ApiError) { super(body.error); }
@@ -35,14 +28,23 @@ async function call<T>(path: string, init: RequestInit = {}, locale?: Locale): P
   return body as T;
 }
 
+const post = (body: unknown): RequestInit => ({ method: "POST", body: JSON.stringify(body) });
+
 export const api = {
+  authConfig: () => call<AuthConfig>("/auth/config"),
+  lineCode: (code: string, redirectUri: string, locale: Locale) => call<AuthResponse>("/auth/line/code", post({ code, redirectUri, locale })),
+  google: (idToken: string, locale: Locale) => call<AuthResponse>("/auth/google", post({ idToken, locale })),
+  devLogin: (email: string, locale: Locale) => call<AuthResponse>("/auth/dev", post({ email }), locale),
+  me: () => call<Me>("/me"),
+  deleteMe: () => call<{ ok: true }>("/me", { method: "DELETE" }),
+
   courses: (locale: Locale) => call<CourseMapResponse>("/courses", {}, locale),
   lesson: (id: string, locale: Locale) => call<LessonResponse>(`/lessons/${encodeURIComponent(id)}`, {}, locale),
-  me: () => call<Me>("/me"),
-  devLogin: (email: string, locale: Locale) =>
-    call<AuthResponse>("/auth/dev", { method: "POST", body: JSON.stringify({ email }) }, locale),
-  practice: (req: PracticeRequest, locale: Locale) =>
-    call<PracticeResponse>("/practice", { method: "POST", body: JSON.stringify(req) }, locale),
-  complete: (lessonId: string, score?: number) =>
-    call<{ first: boolean; me: Me }>("/progress/complete", { method: "POST", body: JSON.stringify({ lessonId, score }) }),
+  practice: (req: PracticeRequest, locale: Locale) => call<PracticeResponse>("/practice", post(req), locale),
+  complete: (lessonId: string, locale: Locale, score?: number, timing?: { durationSec: number; stepSeconds: number[] }) =>
+    call<{ first: boolean; me: Me }>("/progress/complete", post({ lessonId, score, ...timing }), locale),
+
+  waitlist: (email: string, locale: Locale) => call<{ ok: true; added: boolean }>("/waitlist", post({ email, locale })),
+  checkout: (period: "monthly" | "yearly", locale: Locale) => call<UrlResponse>("/billing/checkout", post({ period }), locale),
+  portal: (locale: Locale) => call<UrlResponse>("/billing/portal", post({}), locale),
 };

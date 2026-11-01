@@ -1,0 +1,46 @@
+{
+  "id": "s1-03",
+  "locale": "en",
+  "stage": 1,
+  "order": 3,
+  "title": "Show the AI examples",
+  "summary": "Paste one or two samples and ask the AI to write in the same style",
+  "minutes": 7,
+  "xp": 15,
+  "steps": [
+    {
+      "type": "explain",
+      "body": "Sometimes the style you want is hard to describe, like \"cute, the way our shop does it\".\n\nThe easier way: **show the AI an example** and say \"write like this\".\n\nHow to do it:\n1. Say what you want the AI to do\n2. Paste 1–2 examples and mark clearly which part is the example\n3. Say how many you want and what they're about\n\nOne example shows many things at once: **length, emojis, line breaks and tone**."
+    },
+    {
+      "type": "example",
+      "bad": "Write 3 cute captions for my chili paste",
+      "prompt": "I sell homemade Thai chili paste on my Facebook page. Write captions for 3 new products in the same style as these 2 examples.\n\nExample 1:\nGrandma's Fiery Chili Paste 🌶️\nSeriously hot, perfect with an omelet\n59 baht a jar, message us to order\n\nExample 2:\nFreshly Roasted Red-Eye Chili Paste 🔥\nRich garlic aroma, amazing with fresh veggies\n59 baht a jar, message us to order\n\nNew products: mackerel chili paste, Chiang Mai green chili paste, southern shrimp chili paste, 69 baht a jar",
+      "output": "Homestyle Mackerel Chili Paste 🐟\nPacked with fish, best with boiled veggies\n69 baht a jar, message us to order\n\nAuthentic Chiang Mai Green Chili Paste 🌿\nSmoky grilled chilies, perfect with pork crackling\n69 baht a jar, message us to order\n\nSouthern Shrimp Chili Paste 🦐\nFragrant shrimp, just the right heat, great with hot rice\n69 baht a jar, message us to order",
+      "note": "The AI copied every pattern: 3 lines, an emoji after the name, what to eat it with, and the price at the end."
+    },
+    {
+      "type": "quiz",
+      "question": "You've already given examples. Why do you still need to give the new product details (names, price)?",
+      "options": [
+        "You don't — the AI can guess",
+        "The AI copies the style but doesn't know the new facts; without them it may make things up",
+        "To make the prompt longer"
+      ],
+      "answer": 1,
+      "explain": "Examples teach \"how to write\". Real facts — product names, prices, dates — you have to provide yourself."
+    },
+    {
+      "type": "practice",
+      "task": "You own a coffee shop and want to send a LINE message announcing 2 new drinks. Write a prompt asking the AI for 3 versions to choose from, and include 1–2 messages your shop sent before as examples (you can make them up).",
+      "rubric": [
+        "Includes at least 1 actual example message, clearly marked as the example",
+        "Asks the AI to follow the example's style and says how many versions (3)",
+        "Gives the new facts needed (drink names, prices or promotion)",
+        "Gives context (what shop, who it's for, sent on LINE)"
+      ],
+      "maxChars": 700,
+      "placeholder": "I own a coffee shop... Write 3 LINE messages in the style of this example\n\nExample:\n..."
+    }
+  ]
+}
