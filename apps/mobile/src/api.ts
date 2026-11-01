@@ -42,6 +42,6 @@ export const api = {
   courses: (locale: Locale) => call<CourseMapResponse>("/courses", {}, locale),
   lesson: (id: string, locale: Locale) => call<LessonResponse>(`/lessons/${encodeURIComponent(id)}`, {}, locale),
   practice: (req: PracticeRequest, locale: Locale) => call<PracticeResponse>("/practice", post(req), locale),
-  complete: (lessonId: string, locale: Locale, score?: number) =>
-    call<{ first: boolean; me: Me }>("/progress/complete", post({ lessonId, score }), locale),
+  complete: (lessonId: string, locale: Locale, score?: number, timing?: { durationSec: number; stepSeconds: number[] }) =>
+    call<{ first: boolean; me: Me }>("/progress/complete", post({ lessonId, score, ...timing }), locale),
 };

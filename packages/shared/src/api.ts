@@ -65,6 +65,10 @@ export interface PracticeResponse {
 export const CompleteRequest = z.object({
   lessonId: z.string(),
   score: z.number().int().min(0).max(100).optional(),
+  /** 学习用时（秒），只算页面可见的时间 */
+  durationSec: z.number().int().min(0).max(4 * 3600).optional(),
+  /** 每一步的秒数，下标对应课程 steps */
+  stepSeconds: z.array(z.number().int().min(0).max(3600)).max(30).optional(),
 });
 export type CompleteRequest = z.infer<typeof CompleteRequest>;
 

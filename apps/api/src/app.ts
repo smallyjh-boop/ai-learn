@@ -8,7 +8,8 @@ import {
   type ApiError, type AuthConfig, type AuthResponse, type CourseMapResponse, type LessonResponse, type Locale, type Me,
   type PracticeResponse, type UrlResponse,
 } from "@ai-learn/shared";
-import { courseMap, getLesson, type Catalog } from "@ai-learn/content";
+import { courseMap, getLesson, listLessons, type Catalog } from "@ai-learn/content";
+import { lessonStats } from "./stats";
 import { config } from "./config";
 import type { Store, UserRow } from "./db/store";
 import type { Quota } from "./quota";
@@ -273,11 +274,33 @@ export async function buildApp(deps: Deps) {
     if (!u) return fail(reply, 401, { error: "login required", code: "UNAUTHORIZED" });
     const body = CompleteRequest.safeParse(req.body);
     if (!body.success) return fail(reply, 400, { error: body.error.message, code: "BAD_REQUEST" });
-    const lesson = getLesson(catalog, localeOf(req, u), body.data.lessonId);
+    const locale = localeOf(req, u);
+    const lesson = getLesson(catalog, locale, body.data.lessonId);
     if (!lesson) return fail(reply, 404, { error: "lesson not found", code: "NOT_FOUND" });
     if (!(await canAccess(lesson.stage, u))) return fail(reply, 403, { error: "pro required", code: "LOCKED" });
     const { first, user } = await store.completeLesson(u.id, lesson.id, body.data.score ?? null, lesson.xp, todayBangkok());
+    const { durationSec, stepSeconds } = body.data;
+    // 步骤数和课程对得上才记录（课程改版后旧客户端的数据不混进来）
+    if (durationSec !== undefined && stepSeconds && stepSeconds.length === lesson.steps.length) {
+      await store.logLessonSession({ userId: u.id, lessonId: lesson.id, locale: lesson.locale, durationSec, stepSeconds, first })
+        .catch((e) => req.log.error(e, "log lesson session failed"));
+    }
     return { first, me: await toMe(user) };
+  });
+
+  // ---------- 运营统计 ----------
+  /**
+   * 每课学习用时：curl -H "Authorization: Bearer $ADMIN_TOKEN" <API>/admin/lesson-stats
+   * 用来校准课程标称分钟数、找出用户卡住的步骤。
+   */
+  app.get("/admin/lesson-stats", async (req, reply) => {
+    if (!config.adminToken || req.headers.authorization !== `Bearer ${config.adminToken}`) {
+      return fail(reply, 401, { error: "admin token required", code: "UNAUTHORIZED" });
+    }
+    const lessons = listLessons(catalog, "th");
+    const stats = [];
+    for (const l of lessons) stats.push(lessonStats(l, await store.lessonSessions(l.id)));
+    return { stats };
   });
 
   // ---------- 落地页预约 ----------

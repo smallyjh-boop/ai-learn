@@ -22,6 +22,8 @@ export const config = {
     dailyTokenAlert: Number(env.AI_DAILY_TOKEN_ALERT ?? 2_000_000),
   },
 
+  /** 运营统计接口（/admin/*）的访问令牌，不填则关闭这些接口 */
+  adminToken: env.ADMIN_TOKEN || "",
   /** 告警推送地址（Slack / Discord / 自建中转），不填只写日志 */
   alertWebhookUrl: env.ALERT_WEBHOOK_URL || "",
 

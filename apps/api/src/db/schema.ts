@@ -72,6 +72,27 @@ export const aiUsage = pgTable(
   (t) => [index("ai_usage_created_idx").on(t.createdAt)],
 );
 
+/**
+ * 学习用时：每次完成一课记一条（含重学），用于校准每课标称分钟数、找出用户卡住的步骤。
+ * 只统计页面可见时的时间，单步上限 10 分钟（前端处理）。删除账号时一起删除。
+ */
+export const lessonSessions = pgTable(
+  "lesson_sessions",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull(),
+    locale: text("locale").notNull(),
+    durationSec: integer("duration_sec").notNull(),
+    /** 每一步的秒数，下标对应课程 steps */
+    stepSeconds: integer("step_seconds").array().notNull(),
+    /** 是否首次完成（重学通常更快，统计时可区分） */
+    first: boolean("first").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("lesson_sessions_lesson_idx").on(t.lessonId, t.createdAt)],
+);
+
 /** 落地页预约名单 */
 export const waitlist = pgTable("waitlist", {
   email: text("email").primaryKey(),

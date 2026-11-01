@@ -30,7 +30,8 @@
 已完成：
 - 后端：Postgres 迁移（启动时自动执行）、LINE（网页授权码 / App id_token）、Google、Apple（JWKS 本地校验）登录、
   Stripe 订阅（Checkout / 订阅管理页 / webhook 签名校验）、RevenueCat 回调、会员按付款来源分行存储并合并、
-  AI 用量记录 + 当日告警 + webhook 推送、练习内容审核（点评模型判 on_task）、删除账号、预约名单
+  AI 用量记录 + 当日告警 + webhook 推送、练习内容审核（点评模型判 on_task）、删除账号、预约名单、
+  学习用时记录（每步秒数，`StepTimer` 在 packages/shared，网站和 App 共用）+ `GET /admin/lesson-stats`（ADMIN_TOKEN）
 - 网站：落地页、学习地图和课程页服务端渲染（构建时静态生成）、sitemap / robots、登录、账户、价格、隐私政策
 - App（Expo SDK 58）：LINE / Google / Apple 登录、RevenueCat 付费墙、每日学习提醒（本地通知）、账户页（含删除账户）、
   课程播放与网站一致。只验证了 tsc、expo export（android / ios 打包）、expo-doctor，**还没在真机上跑过**
@@ -43,7 +44,7 @@
 3. Android 上架准备（用户操作为主）：EAS 账号、`eas build --profile development` 真机测试、
    Google Cloud 建 Android OAuth 客户端（包名 + SHA-1）、LINE channel 加 Android 设置、
    Play Console 建订阅商品并接入 RevenueCat；替换 `com.example.ailearn` 包名和 App 图标
-4. 根据内测反馈调整课程，再写阶段 3–5（约 34 课）
+4. 根据内测反馈调整课程（`/admin/lesson-stats` 校准每课 minutes、看卡住的步骤），再写阶段 3–5（约 34 课）
 5. 成就徽章、提示词收藏库、结业证书
 6. iOS 上架：Apple Developer 账号、App Store Connect 订阅商品、`GOOGLE_IOS_URL_SCHEME`
 

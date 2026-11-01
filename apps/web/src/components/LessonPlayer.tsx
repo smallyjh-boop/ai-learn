@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { t, type Lesson, type LessonResponse, type LessonStep, type Locale, type PracticeResponse } from "@ai-learn/shared";
+import { useEffect, useRef, useState } from "react";
+import { StepTimer, t, type Lesson, type LessonResponse, type LessonStep, type Locale, type PracticeResponse } from "@ai-learn/shared";
 import { api, ApiFailure } from "@/lib/api";
 import { loginHref, updateMe, useSession } from "@/lib/session";
 import { Md } from "./Md";
@@ -25,6 +25,16 @@ export function LessonPlayer({ locale, initial }: { locale: Locale; initial: Les
   const [bestScore, setBestScore] = useState<number | undefined>();
   const [finished, setFinished] = useState<null | { saved: boolean; first: boolean }>(null);
 
+  // 学习计时：换课（含付费课解锁成完整内容）时重新开始；切到别的标签页时暂停
+  const timer = useRef<StepTimer | null>(null);
+  useEffect(() => { timer.current = new StepTimer(lesson.steps.length); }, [lesson]);
+  useEffect(() => { timer.current?.goTo(index); }, [index]);
+  useEffect(() => {
+    const onVis = () => (document.hidden ? timer.current?.pause() : timer.current?.resume());
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
   // 付费课：登录后如果是会员，换成完整内容
   useEffect(() => {
     if (!initial.locked || !me) return;
@@ -42,7 +52,7 @@ export function LessonPlayer({ locale, initial }: { locale: Locale; initial: Les
     if (!isLast) { setIndex(index + 1); setStepDone(false); window.scrollTo({ top: 0 }); return; }
     if (!me) { setFinished({ saved: false, first: false }); return; }
     try {
-      const r = await api.complete(lesson.id, locale, bestScore);
+      const r = await api.complete(lesson.id, locale, bestScore, timer.current?.result());
       updateMe(r.me);
       setFinished({ saved: true, first: r.first });
     } catch {

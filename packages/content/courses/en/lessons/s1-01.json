@@ -20,9 +20,31 @@
       "note": "The good prompt names the product, place, audience, length and offer."
     },
     {
+      "type": "example",
+      "bad": "Give me a birthday gift idea",
+      "prompt": "My mum is turning 60 next week. She loves gardening and cooking. Suggest 3 gifts under 1,000 baht that I can buy in Bangkok, with one short reason each for why she'd like it",
+      "output": "1. A ceramic pot with an air-purifying plant (about 600–900 baht) — something new to grow that also looks nice at home\n2. Japanese pruning shears and gardening gloves (about 500–800 baht) — a practical gift she'll use every day\n3. A clay pot for soups and curries (about 400–700 baht) — perfect for someone who loves to cook her favourite dishes\n\nPrices are rough — check in the shop or a shopping app before you buy.",
+      "note": "Same question, but the good prompt covers all 3 things: who mum is and what she likes (situation), 3 gift ideas with a budget (what you want), and where you'll buy them (where it's used)."
+    },
+    {
+      "type": "quiz",
+      "question": "Which of the 3 things is missing from this prompt? \"Write a message saying the shop is closed next Monday\"",
+      "options": [
+        "Who I am / what the situation is",
+        "What I want",
+        "Who will read it / where it's used"
+      ],
+      "answer": 2,
+      "explain": "Is it for customers or staff? A Facebook post, a LINE message or a sign on the door? Different readers and channels need very different wording."
+    },
+    {
       "type": "quiz",
       "question": "Which prompt will most likely give a usable answer?",
-      "options": ["Write an email", "Write a polite sick-leave email to my manager for 1 day, under 5 lines", "Leave email"],
+      "options": [
+        "Write an email",
+        "Write a polite sick-leave email to my manager for 1 day, under 5 lines",
+        "Leave email"
+      ],
       "answer": 1
     },
     {

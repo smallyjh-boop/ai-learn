@@ -18,6 +18,15 @@ export interface UserRow {
   stripeCustomerId: string | null;
 }
 
+export interface LessonSessionRow {
+  userId: string;
+  lessonId: string;
+  locale: Locale;
+  durationSec: number;
+  stepSeconds: number[];
+  first: boolean;
+}
+
 export interface AiUsageRow {
   userId: string | null;
   kind: "practice" | "grade";
@@ -60,6 +69,9 @@ export interface Store {
   logAiUsage(row: AiUsageRow & { flagged?: boolean }): Promise<void>;
   /** 某时间点以来的 AI token 总数（输入+输出），用于告警 */
   aiTokensSince(since: Date): Promise<number>;
+  logLessonSession(row: LessonSessionRow): Promise<void>;
+  /** 某课的用时记录（统计用） */
+  lessonSessions(lessonId: string): Promise<LessonSessionRow[]>;
   /** 加入预约名单；已存在返回 false */
   addWaitlist(email: string, locale: Locale): Promise<boolean>;
 }
@@ -91,6 +103,7 @@ export class MemoryStore implements Store {
   private prog = new Map<string, Map<string, number | null>>();
   private usage: Array<AiUsageRow & { flagged?: boolean; at: Date }> = [];
   private wait = new Map<string, Locale>();
+  private sessions: LessonSessionRow[] = [];
 
   async findOrCreateUser(input: Parameters<Store["findOrCreateUser"]>[0]) {
     for (const u of this.users.values()) {
@@ -133,7 +146,10 @@ export class MemoryStore implements Store {
     this.ents.delete(userId);
     this.prog.delete(userId);
     this.usage = this.usage.filter((r) => r.userId !== userId);
+    this.sessions = this.sessions.filter((r) => r.userId !== userId);
   }
+  async logLessonSession(row: LessonSessionRow) { this.sessions.push(row); }
+  async lessonSessions(lessonId: string) { return this.sessions.filter((r) => r.lessonId === lessonId); }
   async logAiUsage(row: AiUsageRow & { flagged?: boolean }) { this.usage.push({ ...row, at: new Date() }); }
   async aiTokensSince(since: Date) {
     return this.usage.filter((r) => r.at >= since).reduce((n, r) => n + r.inputTokens + r.outputTokens, 0);
@@ -237,6 +253,15 @@ export class PgStore implements Store {
       .select({ n: sql<string>`coalesce(sum(${schema.aiUsage.inputTokens} + ${schema.aiUsage.outputTokens}), 0)` })
       .from(schema.aiUsage).where(gte(schema.aiUsage.createdAt, since));
     return Number(r?.n ?? 0);
+  }
+
+  async logLessonSession(row: LessonSessionRow) {
+    await this.db.insert(schema.lessonSessions).values(row);
+  }
+
+  async lessonSessions(lessonId: string) {
+    const rows = await this.db.select().from(schema.lessonSessions).where(eq(schema.lessonSessions.lessonId, lessonId));
+    return rows.map((r) => ({ ...r, locale: r.locale as Locale }));
   }
 
   async addWaitlist(email: string, locale: Locale) {

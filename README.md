@@ -46,6 +46,16 @@ docker compose up -d --build
   Stripe webhook → `<API地址>/webhooks/stripe`
 - 改了表结构：`pnpm --filter @ai-learn/api db:generate --name <说明>` 生成新迁移并提交
 
+## 运营统计
+
+```bash
+# 每课学习用时（只算首次完成）：标称分钟 vs 实际中位数、每一步中位秒数、最慢的一步、调整建议
+curl -H "Authorization: Bearer $ADMIN_TOKEN" http://<NAS-IP>:4000/admin/lesson-stats
+```
+
+`suggestion` 为 `nominal_too_high` / `nominal_too_low` 时（实际中位用时与标称相差超过 30%，且样本 ≥ 10），
+调整课程 JSON 里的 `minutes`；`slowestStep` 是用户最可能卡住的一步。
+
 ## 写一节新课
 
 在 `packages/content/courses/th/lessons/` 新建 `s<阶段>-<两位序号>.json`，步骤类型：

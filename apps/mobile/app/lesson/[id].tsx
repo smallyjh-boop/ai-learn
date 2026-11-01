@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { AppState, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
-import { parseMd, t, type Inline, type Lesson, type LessonStep, type PracticeResponse } from "@ai-learn/shared";
+import { parseMd, StepTimer, t, type Inline, type Lesson, type LessonStep, type PracticeResponse } from "@ai-learn/shared";
 import { api, ApiFailure, deviceLocale } from "../../src/api";
 import { updateMe, useSession } from "../../src/session";
 import { useTheme } from "../../src/theme";
@@ -31,6 +31,15 @@ export default function LessonScreen() {
       .catch((e: Error) => setError(e.message));
   }, [id, me?.id, me?.plan]);
 
+  // 学习计时（与网站版一致）：换课时重新开始；App 进入后台时暂停
+  const timer = useRef<StepTimer | null>(null);
+  useEffect(() => { if (lesson) timer.current = new StepTimer(lesson.steps.length); }, [lesson]);
+  useEffect(() => { timer.current?.goTo(index); }, [index]);
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (st) => (st === "active" ? timer.current?.resume() : timer.current?.pause()));
+    return () => sub.remove();
+  }, []);
+
   if (error) return <View style={[s.screen, s.content]}><Text style={{ color: c.warn }}>{error}</Text></View>;
   if (!lesson) return <View style={s.screen} />;
   const step = lesson.steps[index]!;
@@ -41,7 +50,7 @@ export default function LessonScreen() {
     if (!isLast) { setIndex(index + 1); setStepDone(false); return; }
     if (!me) { setFinished({ first: false }); return; }
     try {
-      const r = await api.complete(lesson!.id, deviceLocale, best);
+      const r = await api.complete(lesson!.id, deviceLocale, best, timer.current?.result());
       updateMe(r.me);
       setFinished({ first: r.first });
     } catch {

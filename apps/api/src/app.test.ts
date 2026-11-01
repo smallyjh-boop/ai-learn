@@ -2,6 +2,7 @@ import { after, before, beforeEach, describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { sql } from "drizzle-orm";
 import { loadCatalog } from "@ai-learn/content";
+import { MAX_STEP_SEC, StepTimer } from "@ai-learn/shared";
 import { buildApp } from "./app";
 import { config } from "./config";
 import { MemoryStore, PgStore, nextStreak, type Store } from "./db/store";
@@ -11,6 +12,7 @@ import { MockProvider } from "./ai/gateway";
 import { parseFeedback } from "./ai/practice";
 import { StripeBilling } from "./billing/stripe";
 import { Alerts } from "./alerts";
+import { lessonStats } from "./stats";
 
 process.env.NODE_ENV = "test";
 config.revenuecatToken = "rc-test";
@@ -47,7 +49,7 @@ for (const kind of kinds) {
     beforeEach(async () => {
       store = await kind.make();
       if (store instanceof PgStore) {
-        await store.db.execute(sql`truncate users, progress, entitlements, ai_usage, waitlist restart identity cascade`);
+        await store.db.execute(sql`truncate users, progress, entitlements, ai_usage, waitlist, lesson_sessions restart identity cascade`);
       }
     });
 
@@ -126,6 +128,27 @@ for (const kind of kinds) {
       assert.equal(b.json().me.xp, 10);
       const map = (await app.inject({ method: "GET", url: "/courses", headers: auth })).json();
       assert.equal(map.stages[0].lessons[0].completed, true);
+    });
+
+    test("学习用时：随完成课程记录，步骤数不符时不记录，可按课统计", async () => {
+      const { app, auth } = await setup();
+      const steps = catalog.lessons.th.get("s0-01")!.steps.length;
+      const stepSeconds = Array.from({ length: steps }, (_, i) => 30 + i * 60);
+      const durationSec = stepSeconds.reduce((a, b) => a + b, 0);
+      await app.inject({ method: "POST", url: "/progress/complete", headers: auth, payload: { lessonId: "s0-01", durationSec, stepSeconds } });
+      await app.inject({ method: "POST", url: "/progress/complete", headers: auth, payload: { lessonId: "s0-01", durationSec: 5, stepSeconds: [5] } });
+      const rows = await store.lessonSessions("s0-01");
+      assert.equal(rows.length, 1);
+      assert.deepEqual(rows[0]!.stepSeconds, stepSeconds);
+      assert.equal(rows[0]!.first, true);
+
+      config.adminToken = "admin-test";
+      assert.equal((await app.inject({ method: "GET", url: "/admin/lesson-stats" })).statusCode, 401);
+      const r = await app.inject({ method: "GET", url: "/admin/lesson-stats", headers: { authorization: "Bearer admin-test" } });
+      const s01 = r.json().stats.find((x: { lessonId: string }) => x.lessonId === "s0-01");
+      assert.equal(s01.n, 1);
+      assert.equal(s01.slowestStep.index, steps - 1);
+      assert.equal(s01.suggestion, "not_enough_data");
     });
 
     test("同一邮箱用两种方式登录不报错（各自一个账号）", async () => {
@@ -250,6 +273,32 @@ test("Apple 登录：校验签名和 audience", async () => {
   assert.equal(ok.json().me.email, "a@privaterelay.appleid.com");
   const bad = await app.inject({ method: "POST", url: "/auth/apple", payload: { idToken: await sign("com.other.app") } });
   assert.equal(bad.statusCode, 401);
+});
+
+test("用时统计：中位数和调整建议", () => {
+  const lesson = catalog.lessons.th.get("s0-01")!;
+  const n = lesson.steps.length;
+  const mk = (sec: number) => ({ userId: "u", lessonId: lesson.id, locale: "th" as const, durationSec: sec, stepSeconds: Array(n).fill(Math.round(sec / n)), first: true });
+  // 标称 5 分钟，实际都在 2 分钟左右 → 标称偏高
+  const st = lessonStats(lesson, Array.from({ length: 12 }, (_, i) => mk(110 + i)), 10);
+  assert.equal(st.n, 12);
+  assert.equal(st.suggestion, "nominal_too_high");
+  assert.ok(st.medianMin > 1.8 && st.medianMin < 2.1);
+  // 重学记录不计入
+  assert.equal(lessonStats(lesson, [{ ...mk(100), first: false }]).n, 0);
+});
+
+test("课程计时：暂停不计时、后退累加、单步封顶", () => {
+  const t0 = 1_000_000;
+  const timer = new StepTimer(3, t0);
+  timer.goTo(1, t0 + 20_000);            // 第 0 步 20 秒
+  timer.pause(t0 + 30_000);              // 第 1 步 10 秒后切到后台
+  timer.resume(t0 + 90_000);             // 后台 60 秒不计
+  timer.goTo(0, t0 + 95_000);            // 第 1 步再 5 秒，回到第 0 步
+  timer.goTo(2, t0 + 100_000);           // 第 0 步再 5 秒
+  const r = timer.result(t0 + 100_000 + 2000 * 1000); // 第 2 步挂机 2000 秒 → 封顶 600
+  assert.deepEqual(r.stepSeconds, [25, 15, MAX_STEP_SEC]);
+  assert.equal(r.durationSec, 25 + 15 + MAX_STEP_SEC);
 });
 
 test("连续打卡计算", () => {
